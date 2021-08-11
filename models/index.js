@@ -1,7 +1,7 @@
 const User = require('./user');
 
 const models = {
-  User
+  User,
 }
 
 module.exports = models
