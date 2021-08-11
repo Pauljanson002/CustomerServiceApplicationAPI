@@ -41,7 +41,7 @@ app.use(cors());
 startServer(app).then(()=>{
   app.listen({port},()=>{
     console.log(
-      `GraphQL Server running successfully at port ${port}`
+      `GraphQL Server is running successfully at port ${port}`
     )
   })
 })
