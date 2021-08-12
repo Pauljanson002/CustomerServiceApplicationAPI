@@ -14,5 +14,6 @@ module.exports = {
     }catch (e) {
       throw new Error('Error creating account');
     }
+
   }
 }
