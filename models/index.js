@@ -1,7 +1,10 @@
 const User = require('./user');
-
+const Location = require('./Location');
+const ServiceRequestor = require('./ServiceRequestor');
 const models = {
-  User
-}
+  User,
+  Location,
+  ServiceRequestor
+};
 
-module.exports = models
+module.exports = models;

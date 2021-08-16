@@ -1,7 +1,9 @@
-const Query = require('./query')
-const Mutation = require('./mutation')
+const Query = require('./query');
+const Mutation = require('./mutation');
+const ServiceRequestors = require('./ServiceRequestors');
 
 module.exports = {
   Query,
-  Mutation
+  Mutation,
+  ...ServiceRequestors.Mutation
 };
