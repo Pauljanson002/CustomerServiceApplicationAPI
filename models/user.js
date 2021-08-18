@@ -15,6 +15,7 @@ const UserSchema = new mongoose.Schema(
       type:String,
       required:true
     }
+    //typeID or type:{} eaum of SR,SP
   },
   {
     timestamps:true
