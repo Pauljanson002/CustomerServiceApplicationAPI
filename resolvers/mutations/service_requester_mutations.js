@@ -1,10 +1,10 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { User, ServiceRequestor, Location } = require('../models');
+const { User, ServiceRequester, Location } = require('../../models');
 const { UserInputError } = require('apollo-server');
 
-const ServiceRequestors = {
-  registerServiceRequestor: async (
+const ServiceRequester_Mutations = {
+  registerServiceRequester: async (
     parent,
     {
       username,
@@ -35,7 +35,6 @@ const ServiceRequestors = {
             password: hashed
           }
         ],
-        { session: session }
       );
 
       const user_id = user._id;
@@ -50,18 +49,19 @@ const ServiceRequestors = {
       const location_id = location._id;
 
       //create in the service requestor collection
-      const serviceRequestor = await models.ServiceRequestor.create({
+      const serviceRequester = await models.ServiceRequester.create({
         user_id,
         contactNum,
         location_id
       });
 
-      return jwt.sign({ id: serviceRequestor._id }, process.env.JWT_SECRET);
+      return jwt.sign({ id: serviceRequester._id }, process.env.JWT_SECRET);
     } catch (e) {
+      console.log(e)
       throw new Error('Error creating account');
     }
   },
-  loginServiceRequestor: async (parent, { username, password }, { models }) => {
+  loginServiceRequester: async (parent, { username, password }, { models }) => {
     //validate username and password
     const errors = {};
     const user = await User.findOne({ username });
@@ -73,43 +73,43 @@ const ServiceRequestors = {
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      errors.general = 'Wrong credintials';
-      throw new UserInputError('Wrong credintials', { errors });
+      errors.general = 'Wrong credentials';
+      throw new UserInputError('Wrong credentials', { errors });
     }
 
     const user_id = user._id;
     const type = user.type;
 
-    const serviceRequestor = await ServiceRequestor.findOne({ user_id });
-    if (!serviceRequestor) {
+    const serviceRequester = await ServiceRequester.findOne({ user_id });
+    if (!serviceRequester) {
       errors.general = 'User not found sr';
       throw new UserInputError('User not found sr', { errors });
     }
 
     const token = jwt.sign(
-      { id: serviceRequestor._id },
+      { id: serviceRequester._id },
       process.env.JWT_SECRET
     );
 
     return {
-      ...serviceRequestor._doc,
-      id: serviceRequestor._id,
+      ...serviceRequester._doc,
+      id: serviceRequester._id,
       token
     };
   },
 
-  deleteServiceRequestor: async (parent, { user_id }, { models }) => {
+  deleteServiceRequester: async (parent, { user_id }, { models }) => {
     //const user=checkAuth(context); authenticate the owner
     const user = await models.User.findById(user_id);
     try {
-      const serviceRequestor = await models.ServiceRequestor.findOne({
+      const serviceRequester = await models.ServiceRequester.findOne({
         user_id
       });
       const owner = await models.User.findById(user_id);
-      if (user._id.toString() === serviceRequestor.user_id.toString()) {
-        //only deletes information about the user in user and service requestor collection
+      if (user._id.toString() === serviceRequester.user_id.toString()) {
+        //only deletes information about the user in user and service requester collection
         //make transactional
-        await serviceRequestor.delete();
+        await serviceRequester.delete();
         await owner.delete();
         return 'User is deleted';
       } else {
@@ -121,4 +121,4 @@ const ServiceRequestors = {
   }
 };
 
-module.exports = ServiceRequestors;
+module.exports = ServiceRequester_Mutations;

@@ -7,7 +7,7 @@ module.exports = gql`
     email: String!
   }
 
-  type ServiceRequestorUser {
+  type ServiceRequesterUser {
     id: ID!
     token: String!
     createdAt: String!
@@ -27,7 +27,7 @@ module.exports = gql`
       postalCode: String!
     ): ID!
 
-    registerServiceRequestor(
+    registerServiceRequester(
       username: String!
       email: String!
       contactNum: String!
@@ -39,11 +39,11 @@ module.exports = gql`
       confirmPassword: String!
     ): String!
 
-    loginServiceRequestor(
+    loginServiceRequester(
       username: String!
       password: String!
-    ): ServiceRequestorUser!
+    ): ServiceRequesterUser!
 
-    deleteServiceRequestor(user_id: ID!): String!
+    deleteServiceRequester(user_id: ID!): String!
   }
 `;

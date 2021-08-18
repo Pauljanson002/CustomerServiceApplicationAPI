@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
-const ServiceRequestorSchema = new mongoose.Schema({
+const ServiceRequesterSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    type: String,
     ref: 'user'
   },
 
@@ -14,13 +13,12 @@ const ServiceRequestorSchema = new mongoose.Schema({
 
   location_id: {
     type: mongoose.Schema.Types.ObjectId,
-    type: String,
     ref: 'Location'
   }
 });
 
-const ServiceRequestor = mongoose.model(
-  'ServiceRequestor',
-  ServiceRequestorSchema
+const ServiceRequester = mongoose.model(
+  'ServiceRequester',
+  ServiceRequesterSchema
 );
-module.exports = ServiceRequestor;
+module.exports = ServiceRequester;
