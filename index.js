@@ -36,7 +36,9 @@ async function startServer(app) {
     typeDefs,
     resolvers,
     context:async ({req})=>{
-      return {models};
+      const token = req.headers.authorization;
+      const user = getUser(token);
+      return {models,user};
     }
   })
   await server.start();
