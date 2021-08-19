@@ -14,8 +14,11 @@ const UserSchema = new mongoose.Schema(
     password:{
       type:String,
       required:true
+    },
+    service_provider:{
+      type:Boolean,
+      default:false
     }
-    //typeID or type:{} eaum of SR,SP
   },
   {
     timestamps:true
