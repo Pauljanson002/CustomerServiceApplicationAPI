@@ -21,7 +21,16 @@ const models = require('./models')
 const {ApolloServer} = require('apollo-server-express');
 const typeDefs = require('./schema')
 const resolvers = require('./resolvers')
-
+const getUser = token=>{
+  if(token){
+    try{
+      return jwt.verify(token,process.env.JWT_SECRET);
+    }catch (e) {
+      console.log(e)
+      throw new Error("Session invalid")
+    }
+  }
+}
 async function startServer(app) {
   const server = new ApolloServer({
     typeDefs,
