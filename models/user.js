@@ -15,7 +15,15 @@ const UserSchema = new mongoose.Schema(
       type:String,
       required:true
     },
-    service_provider:{
+    is_service_requester:{
+      type:Boolean,
+      default:false
+    },
+    is_service_provider:{
+      type:Boolean,
+      default:false
+    },
+    is_admin:{
       type:Boolean,
       default:false
     }

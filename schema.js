@@ -5,7 +5,9 @@ module.exports = gql`
     id: ID!
     username: String!
     email: String!
-    service_provider:Boolean!  
+    is_service_provider:Boolean!
+    is_service_requester:Boolean!
+    is_admin:Boolean!
   }
 
   type ServiceRequesterUser {
