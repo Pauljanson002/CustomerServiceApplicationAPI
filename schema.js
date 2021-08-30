@@ -5,9 +5,14 @@ module.exports = gql`
     id: ID!
     username: String!
     email: String!
-    is_service_provider:Boolean!
-    is_service_requester:Boolean!
-    is_admin:Boolean!
+    nic:String,
+    profession:String,
+    province:String,
+    city:String,
+    town:String,
+    bio:String,
+    service_providing_status:Boolean
+    roles:[String]  
   }
 
   type ServiceRequesterUser {
@@ -24,7 +29,8 @@ module.exports = gql`
   }
   type Mutation {
     signUp(username: String!, email: String!, password: String!): String!
-    signIn(email:String!,password:String!):String! 
+    signIn(email:String!,password:String!):String!
+    makeMeServiceProvider(nic:String!,profession:String!,province:String!, city:String!,town:String!,bio:String):User!  
     addLocation(
       address: String!
       city: String!

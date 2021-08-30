@@ -15,15 +15,19 @@ const UserSchema = new mongoose.Schema(
       type:String,
       required:true
     },
-    is_service_requester:{
-      type:Boolean,
-      default:false
+    roles:[{
+      type:String
+    }],
+    nic:String,
+    profession:String,
+    province:String,
+    city:String,
+    town:String,
+    bio:{
+      type:String,
+      default:""
     },
-    is_service_provider:{
-      type:Boolean,
-      default:false
-    },
-    is_admin:{
+    service_providing_status:{
       type:Boolean,
       default:false
     }
