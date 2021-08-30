@@ -12,7 +12,7 @@ const user_mutations = {
         email,
         password: hashed
       });
-      return jwt.sign({ id: user._id,service_provider:user.service_provider}, process.env.JWT_SECRET);
+      return jwt.sign({ id: user._id}, process.env.JWT_SECRET);
 
     } catch (e) {
       throw new Error('Error creating account');
@@ -32,7 +32,50 @@ const user_mutations = {
     if(!valid){
       throw new AuthenticationError('Error signing in : Password invalid')
     }
-    return jwt.sign({id:user._id,service_provider:user.service_provider},process.env.JWT_SECRET);
+    return jwt.sign({id:user._id},process.env.JWT_SECRET);
+  },
+  makeMeServiceProvider:async (parent,{nic,profession,province, city,town,bio},{models,user})=>{
+    if(!user){
+      throw new AuthenticationError("You are not registered to become a service provider")
+    }
+    return await models.User.findOneAndUpdate({
+      _id:user.id
+    },{
+      $set:{
+        nic,profession,province,city,town,bio,
+        service_providing_status:true
+      },
+      $addToSet:{
+        roles:"service_provider"
+      }
+    },{
+      new:false
+    });
+  },
+
+  registerServiceRequester:async (parent,{
+      contactNum,
+      address,
+      city,
+      postalCode,
+  },{models,user})=>{
+    if(!user){
+      throw new AuthenticationError("You are not registered to become a service provider")
+    }
+    console.log(user);
+    return await models.User.findOneAndUpdate({
+      _id:user.id
+    },{
+      $set:{
+        contactNum,address,city,postalCode,
+        
+      },
+      $addToSet:{
+        roles:"service_requester"
+      }
+    },{
+      new:false
+    });
   }
 }
 

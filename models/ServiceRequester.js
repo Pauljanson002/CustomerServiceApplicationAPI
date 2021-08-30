@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const ServiceRequesterSchema = new mongoose.Schema({
   user_id: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: 'user'
   },
 
@@ -11,8 +11,9 @@ const ServiceRequesterSchema = new mongoose.Schema({
     required: true
   },
 
-  location_id: {
-    type: mongoose.Schema.Types.ObjectId,
+  location: {
+    type: Map,
+    of:String,
     ref: 'Location'
   }
 });
