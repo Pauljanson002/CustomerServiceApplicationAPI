@@ -51,6 +51,7 @@ const user_mutations = {
     },{
       new:false
     });
+
   },
 
   registerServiceRequester:async (parent,{
@@ -76,6 +77,7 @@ const user_mutations = {
     },{
       new:false
     });
+
   }
 }
 
