@@ -51,6 +51,33 @@ const user_mutations = {
     },{
       new:false
     });
+
+  },
+
+  registerServiceRequester:async (parent,{
+      contactNum,
+      address,
+      city,
+      postalCode,
+  },{models,user})=>{
+    if(!user){
+      throw new AuthenticationError("You are not registered to become a service provider")
+    }
+    console.log(user);
+    return await models.User.findOneAndUpdate({
+      _id:user.id
+    },{
+      $set:{
+        contactNum,address,city,postalCode,
+        
+      },
+      $addToSet:{
+        roles:"service_requester"
+      }
+    },{
+      new:false
+    });
+
   }
 }
 

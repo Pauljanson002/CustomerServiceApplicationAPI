@@ -7,6 +7,10 @@ module.exports = gql`
     email: String!
     nic:String,
     profession:String,
+    contactNum:String,
+    profession:String,
+    address:String,
+
     province:String,
     city:String,
     town:String,
@@ -29,32 +33,15 @@ module.exports = gql`
   }
   type Mutation {
     signUp(username: String!, email: String!, password: String!): String!
-    signIn(email:String!,password:String!):String!
-    makeMeServiceProvider(nic:String!,profession:String!,province:String!, city:String!,town:String!,bio:String):User!  
-    addLocation(
-      address: String!
-      city: String!
-      town: String!
-      postalCode: String!
-    ): ID!
-
+    signIn(email:String!,password:String!):String! 
+    makeMeServiceProvider(nic:String!,profession:String!,province:String!, city:String!,town:String!,bio:String):User!
     registerServiceRequester(
-      username: String!
-      email: String!
+ 
       contactNum: String!
       address: String!
       city: String!
-      town: String!
       postalCode: String!
-      password: String!
-      confirmPassword: String!
-    ): String!
+    ): User!
 
-    loginServiceRequester(
-      username: String!
-      password: String!
-    ): ServiceRequesterUser!
-
-    deleteServiceRequester(user_id: ID!): String!
   }
 `;
