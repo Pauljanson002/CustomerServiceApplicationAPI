@@ -14,8 +14,23 @@ const UserSchema = new mongoose.Schema(
     password:{
       type:String,
       required:true
+    },
+    roles:[{
+      type:String
+    }],
+    nic:String,
+    profession:String,
+    province:String,
+    city:String,
+    town:String,
+    bio:{
+      type:String,
+      default:""
+    },
+    service_providing_status:{
+      type:Boolean,
+      default:false
     }
-    //typeID or type:{} eaum of SR,SP
   },
   {
     timestamps:true

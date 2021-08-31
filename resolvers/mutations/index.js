@@ -1,21 +1,7 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const user_mutations = require('./user_mutations')
+
 const service_requester_mutations = require('./service_requester_mutations')
 module.exports = {
-  signUp: async (parent, { username, email, password }, { models }) => {
-    email = email.trim().toLowerCase();
-    const hashed = await bcrypt.hash(password, 10);
-    try {
-      const user = await models.User.create({
-        username,
-        email,
-        password: hashed
-      });
-      return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-
-    } catch (e) {
-      throw new Error('Error creating account');
-    }
-  },
+ ...user_mutations,
   ...service_requester_mutations
 };
