@@ -5,43 +5,77 @@ module.exports = gql`
     id: ID!
     username: String!
     email: String!
-    nic:String,
-    profession:String,
-    contactNum:String,
-    profession:String,
-    address:String,
-
-    province:String,
-    city:String,
-    town:String,
-    bio:String,
-    service_providing_status:Boolean
-    roles:[String]  
+    nic: String
+    profession: String
+    contactNum: String
+    address: String
+    province: String
+    city: String
+    town: String
+    bio: String
+    service_providing_status: Boolean
+    roles: [String]
   }
 
-  type ServiceRequesterUser {
+  type ServiceRequest {
     id: ID!
-    token: String!
-    createdAt: String!
-    username: String!
-    email: String!
+    requester_id: ID
+    provider_id: ID
+    date:String
+    time:String
+    payMethod:String
+    task: String!
+    min_price:String
+    max_price:String
+    image1: String
+    image2: String
+    image3: String
   }
-  
+
   type Query {
     users: [User!]!
-    me:User!  
+    searchServiceProviderbyName: [User!]!
+    searchServiceProviderbyProfession: [User!]!
+    me: User!
+    pendingServiceRequestsForMe:[ServiceRequest!]
+    acceptedServiceRequestsForMe:[ServiceRequest!]
+    pendingServiceRequestsbyMe:[ServiceRequest!]
+    acceptedServiceRequestsbyMe:[ServiceRequest!]
+
   }
+
   type Mutation {
     signUp(username: String!, email: String!, password: String!): String!
-    signIn(email:String!,password:String!):String! 
-    makeMeServiceProvider(nic:String!,profession:String!,province:String!, city:String!,town:String!,bio:String):User!
+
+    signIn(email: String!, password: String!): String!
+
+    makeMeServiceProvider(
+      nic: String!
+      profession: String!
+      province: String!
+      city: String!
+      town: String!
+      bio: String
+    ): User!
+
     registerServiceRequester(
- 
       contactNum: String!
       address: String!
       city: String!
       postalCode: String!
     ): User!
 
+    createServiceRequest(
+      provider_id: ID
+      date:String
+      time:String
+      payMethod:String
+      task: String!
+      min_price:String
+      max_price:String
+      image1: String
+      image2: String
+      image3: String
+    ): ServiceRequest!
   }
 `;

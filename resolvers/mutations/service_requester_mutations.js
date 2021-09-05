@@ -1,42 +1,43 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { User, ServiceRequester, Location } = require('../../models');
-const { UserInputError } = require('apollo-server');
 
-const ServiceRequester_Mutations = {
-  registerServiceRequester: async (
+const {
+  AuthenticationError,
+  ForbiddenError
+} = require('apollo-server-express');
+const { User, ServiceRequests } = require('../../models');
+
+const service_requester_mutations = {
+  createServiceRequest: async (
     parent,
-    {
-      user_id,
-      contactNum,
-      address,
-      city,
-      postalCode,
-
-    },
-    { models }
+    { provider_id, date, time, payMethod, task,min_price,max_price,image1, image2, image3 },
+    { models, user }
   ) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
     try {
-      //create in the service requestor collection
-      const serviceRequester = await models.ServiceRequester.create({
-        user_id,
-        contactNum,
-        location:{address, city,postalCode }
+      console.log(provider_id, date, time, payMethod, task,min_price,max_price,image1, image2, image3 );
+      const serviceRequest = await models.ServiceRequests.create({
+        requester_id: user.id,
+        accepted_provider_id:provider_id,
+        service_date:date,
+        service_time:time,
+        payment_method:payMethod,
+        task,
+        min_value:min_price,
+        max_value:max_price,
+        image1,
+        image2,
+        image3
       });
 
-      return serviceRequester.contactNum;
-
       
+      return serviceRequest;
     } catch (e) {
-      console.log(e)
-      throw new Error('Error adding details to your account!');
+      throw new Error('Error in creating the service request.');
     }
-  },
-
-  // Login and delete will be handled in user.
-
-
-
+  }
 };
 
-module.exports = ServiceRequester_Mutations;
+module.exports = service_requester_mutations;

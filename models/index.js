@@ -1,12 +1,9 @@
 const User = require('./user');
-const Location = require('./Location');
-const ServiceRequestor = require('./ServiceRequester');
+const ServiceRequests = require('./serviceRequests');
 
 const models = {
   User,
-  Location,
-  ServiceRequester: ServiceRequestor,
-
+  ServiceRequests
 };
 
 module.exports = models;
