@@ -11,20 +11,19 @@ module.exports ={
     if (!user) {
       throw new AuthenticationError('You are not registered');
     }
-    console.log(user);
+    
     var nameRegex = new RegExp(username);
-    return await User.find({ username: { $regex: nameRegex } });
+    return await models.User.find({ username: { $regex: nameRegex } , service_providing_status:true});
   },
   searchServiceProviderbyProfession: async (
     parent,
-    { professionType },
+    { profession },
     { models, user }
   ) => {
-    if (!user) {
-      throw new AuthenticationError('You are not registered');
-    }
-    console.log(user);
 
-    return await User.find({ profession: { professionType } });
+
+    const users= await models.User.find({ profession: profession  });
+    console.log(users);
+    return users;
   },
 }

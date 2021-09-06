@@ -34,8 +34,8 @@ module.exports = gql`
 
   type Query {
     users: [User!]!
-    searchServiceProviderbyName: [User!]!
-    searchServiceProviderbyProfession: [User!]!
+    searchServiceProviderbyName(name:String!): [User!]!
+    searchServiceProviderbyProfession(profession:String!): [User!]!
     me: User!
     pendingServiceRequestsForMe:[ServiceRequest!]
     acceptedServiceRequestsForMe:[ServiceRequest!]
