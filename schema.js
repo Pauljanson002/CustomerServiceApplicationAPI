@@ -36,6 +36,7 @@ module.exports = gql`
     users: [User!]!
     searchServiceProviderbyName(name:String!): [User!]!
     searchServiceProviderbyProfession(profession:String!): [User!]!
+    viewAllServiceProviders:[User!]!
     me: User!
     pendingServiceRequestsForMe:[ServiceRequest!]
     acceptedServiceRequestsForMe:[ServiceRequest!]

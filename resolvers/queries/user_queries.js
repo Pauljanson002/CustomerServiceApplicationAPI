@@ -20,9 +20,25 @@ module.exports ={
     { profession },
     { models, user }
   ) => {
-
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
 
     const users= await models.User.find({ profession: profession  });
+    console.log(users);
+    return users;
+  },
+
+  viewAllServiceProviders: async (
+    parent,
+    args,
+    { models, user }
+  ) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
+
+    const users= await models.User.find({ });
     console.log(users);
     return users;
   },
