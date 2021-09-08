@@ -5,15 +5,17 @@ module.exports ={
   },
   searchServiceProviderbyName: async (
     parent,
-    { username },
+    { name },
     { models, user }
   ) => {
     if (!user) {
       throw new AuthenticationError('You are not registered');
     }
-    
-    var nameRegex = new RegExp(username);
-    return await models.User.find({ username: { $regex: nameRegex } , service_providing_status:true});
+    //console.log(name);
+    var nameRegex = new RegExp(name.toUpperCase());
+    const users= await models.User.find({ username: { $regex: nameRegex , $options:'i'}});
+    console.log(users);
+    return users;
   },
   searchServiceProviderbyProfession: async (
     parent,
@@ -25,7 +27,7 @@ module.exports ={
     }
 
     const users= await models.User.find({ profession: profession  });
-    console.log(users);
+    //console.log(users);
     return users;
   },
 
@@ -39,7 +41,7 @@ module.exports ={
     }
 
     const users= await models.User.find({ });
-    console.log(users);
+    //console.log(users);
     return users;
   },
 }
