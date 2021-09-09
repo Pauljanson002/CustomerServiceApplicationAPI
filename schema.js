@@ -78,5 +78,17 @@ module.exports = gql`
       image2: String
       image3: String
     ): ServiceRequest!
+
+    createBiddingJob(
+      date:String
+      time:String
+      payMethod:String
+      task: String!
+      min_price:String
+      max_price:String
+      image1: String
+      image2: String
+      image3: String
+    ): ServiceRequest!
   }
 `;
