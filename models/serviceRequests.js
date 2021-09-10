@@ -7,7 +7,7 @@ const ServiceRequestSchema = new mongoose.Schema(
       required: true,
       ref: 'User'
     },
-    accepted_provider_id: {
+    provider_id: {
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
@@ -37,11 +37,11 @@ const ServiceRequestSchema = new mongoose.Schema(
     contentType: String
   }
 ,
-    min_value: String,
-    max_value: String,
-    payment_method: String,
-    service_date: String,
-    service_time: String,
+    min_price: String,
+    max_price: String,
+    payMethod: String,
+    date: String,
+    time: String,
     state: {
         type:String,
         default:"Pending"

@@ -20,13 +20,13 @@ const service_requester_mutations = {
       console.log(provider_id, date, time, payMethod, task,min_price,max_price,image1, image2, image3 );
       const serviceRequest = await models.ServiceRequests.create({
         requester_id: user.id,
-        accepted_provider_id:provider_id,
-        service_date:date,
-        service_time:time,
-        payment_method:payMethod,
+        provider_id,
+        date,
+        time,
+        payMethod,
         task,
-        min_value:min_price,
-        max_value:max_price,
+        min_price,
+        max_price,
         image1,
         image2,
         image3

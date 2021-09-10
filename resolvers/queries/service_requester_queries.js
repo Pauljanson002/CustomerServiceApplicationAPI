@@ -13,21 +13,25 @@ const service_requester_queries = {
           'You are not registered user'
         );
       }
-      return await ServiceRequests.find({ state: 'Pending', requester_id: user.id }).limit(
+      const requests=  await ServiceRequests.find({ state: 'Pending', requester_id: user.id }).limit(
         100
       );
+      return requests;
     },
   
     acceptedServiceRequestsbyMe: async (parent, args, { models, user }) => {
       if (!user) {
         throw new AuthenticationError(
-          'You are not registered to become a service provider'
+          'You are not a registered user'
         );
       }
-      return await ServiceRequests.find({
+
+      const requests= await models.ServiceRequests.find({
         state: 'Accepted',
         requester_id: user.id
       }).limit(100);
+      console.log(requests);
+      return requests;
     }
   };
 
