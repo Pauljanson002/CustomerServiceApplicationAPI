@@ -20,7 +20,13 @@ const JobPostingSchema = new mongoose.Schema({
    budgetRange:{
      lowerLimit:Number,
      upperLimit:Number
-   }
+   },
+  payMethod:String,
+  state:{
+     type:String,
+    default:"open",
+    enum:["open","closed"]
+  }
 },{
   timestamps:true
 });

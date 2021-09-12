@@ -42,8 +42,14 @@ const ServiceRequestSchema = new mongoose.Schema(
     payMethod: String,
     date: String,
     time: String,
+    hasAdvancedPaid:{
+      type:Boolean,
+      default:false
+    },
+    
     state: {
         type:String,
+        enum:["Pending","Accepted","Started","Completed"],
         default:"Pending"
     },    
   },
