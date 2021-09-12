@@ -19,6 +19,7 @@ const service_provider_queries = {
     const pendingRequests=await ServiceRequests.find({ state: 'Pending', provider_id: user.id }).limit(
       100
     );
+    console.log(pendingRequests);
     return pendingRequests;
   },
 
@@ -35,7 +36,7 @@ const service_provider_queries = {
       state: 'Accepted',
       provider_id: user.id
     }).limit(100);
-
+    console.log(acceptedRequests);
     return acceptedRequests;
   }
 };
