@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const {AuthenticationError,ForbiddenError} = require('apollo-server-express')
 
-const user_mutations = {
+const user_mutations ={
   signUp: async (parent, { username, email, password }, { models }) => {
     email = email.trim().toLowerCase();
     const hashed = await bcrypt.hash(password, 10);

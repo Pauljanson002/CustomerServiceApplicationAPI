@@ -1,9 +1,14 @@
 const User = require('./user');
-const ServiceRequests = require('./serviceRequests');
-
+const Location = require('./Location');
+const ServiceRequestor = require('./ServiceRequester');
+const JobPosting = require('./JobPosting')
+const JobBid = require('./JobBid')
 const models = {
   User,
-  ServiceRequests
+  Location,
+  ServiceRequester: ServiceRequestor,
+  JobPosting,
+  JobBid
 };
 
 module.exports = models;

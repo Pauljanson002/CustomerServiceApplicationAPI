@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server-express');
 
 module.exports = gql`
+  scalar DateTime
+  
   type User {
     id: ID!
     username: String!
@@ -16,6 +18,39 @@ module.exports = gql`
     service_providing_status: Boolean
     roles: [String]
   }
+  type Location {
+      province:String!,
+      city:String!,
+      town:String!
+  }
+  type BudgetRange{
+      lowerLimit: Float!
+      upperLimit:Float!
+  }
+  type JobPosting {
+      id:ID!
+      heading:String!
+      location:Location!
+      category:String!
+      skills:[String]!
+      postedBy:User!
+      description:String,
+      budgetRange:BudgetRange
+  }
+  type JobPostingFeed{
+      jobPostings:[JobPosting]!
+      cursor:String!
+      hasNextPage:Boolean!
+  }
+  type JobBid{
+      proposedAmount:Float!
+      proposedDate:DateTime!
+      detailedBreakdown:String
+      bidBy:User
+      jobPosting:JobPosting
+      state:String
+  }
+  type ServiceRequest {
 
   type ServiceRequest {
     id: ID!
@@ -54,10 +89,10 @@ module.exports = gql`
       nic: String!
       profession: String!
       province: String!
-      city: String!
-      town: String!
-      bio: String
-    ): User!
+        city: String!
+        town: String!
+        bio: String
+      ): User!
 
     registerServiceRequester(
       contactNum: String!
