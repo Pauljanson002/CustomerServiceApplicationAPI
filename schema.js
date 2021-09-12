@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server-express');
 
 module.exports = gql`
+  scalar DateTime
+  
   type User {
     id: ID!
     username: String!
@@ -25,6 +27,7 @@ module.exports = gql`
   }
   type JobPosting {
       id:ID!
+      heading:String!
       location:Location!
       category:String!
       skills:[String]!
@@ -37,7 +40,14 @@ module.exports = gql`
       cursor:String!
       hasNextPage:Boolean!
   }
-
+  type JobBid{
+      proposedAmount:Float!
+      proposedDate:DateTime!
+      detailedBreakdown:String
+      bidBy:User
+      jobPosting:JobPosting
+      state:String
+  }
   type ServiceRequesterUser {
     id: ID!
     token: String!
@@ -85,8 +95,10 @@ module.exports = gql`
       deleteServiceRequester(user_id: ID!): String!
       
 #----------------------------------------------------------Job Posting mutations ---------------------------------------------------------
-      createJobPosting(province:String!,city:String!,town:String!,
+      createJobPosting(heading:String!,province:String!,city:String!,town:String!,
       category:String!,skills:[String],description:String!,lowerLimit:Float!,upperLimit:Float!):JobPosting!
-      
+      #----------------------------------------Job Bid mutations -----------------
+      createJobBid(proposedAmount:Float!,proposedDate:String!,
+      detailedBreakdown:String,jobPosting:ID!):JobBid!
   }
 `;

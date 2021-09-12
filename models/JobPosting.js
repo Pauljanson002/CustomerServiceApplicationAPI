@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const JobPostingSchema = new mongoose.Schema({
+   heading:{
+     type:String,
+     required:true
+   },
    location:{
      province:String,
      city:String,
