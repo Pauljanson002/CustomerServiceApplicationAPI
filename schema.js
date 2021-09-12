@@ -142,6 +142,7 @@ module.exports = gql`
       description: String!
       lowerLimit: Float!
       upperLimit: Float!
+      payMethod:String  
     ): JobPosting!
     createJobBid(
       proposedAmount: Float!
