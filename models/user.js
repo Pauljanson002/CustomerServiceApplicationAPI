@@ -19,10 +19,17 @@ const UserSchema = new mongoose.Schema(
       type:String
     }],
     nic:String,
+    contactNum:String,
+    address:String,
     profession:String,
     province:String,
     city:String,
     town:String,
+    postalCode:String,
+    profile_pic:String,
+    provider_review_count:String,
+    requester_rating:String,
+    provider_rating:String,
     bio:{
       type:String,
       default:""

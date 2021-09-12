@@ -1,18 +1,22 @@
 const { gql } = require('apollo-server-express');
 
 module.exports = gql`
+  scalar DateTime
+  
   type User {
     id: ID!
     username: String!
     email: String!
-    nic:String,
-    profession:String,
-    province:String,
-    city:String,
-    town:String,
-    bio:String,
-    service_providing_status:Boolean
-    roles:[String]  
+    nic: String
+    profession: String
+    contactNum: String
+    address: String
+    province: String
+    city: String
+    town: String
+    bio: String
+    service_providing_status: Boolean
+    roles: [String]
   }
   type Location {
       province:String!,
@@ -25,6 +29,7 @@ module.exports = gql`
   }
   type JobPosting {
       id:ID!
+      heading:String!
       location:Location!
       category:String!
       skills:[String]!
@@ -37,56 +42,87 @@ module.exports = gql`
       cursor:String!
       hasNextPage:Boolean!
   }
+  type JobBid{
+      proposedAmount:Float!
+      proposedDate:DateTime!
+      detailedBreakdown:String
+      bidBy:User
+      jobPosting:JobPosting
+      state:String
+  }
 
-  type ServiceRequesterUser {
+  type ServiceRequest {
     id: ID!
-    token: String!
-    createdAt: String!
-    username: String!
-    email: String!
+    requester_id: ID
+    provider_id: ID
+    date:String
+    time:String
+    payMethod:String
+    task: String!
+    min_price:String
+    max_price:String
+    image1: String
+    image2: String
+    image3: String
   }
-  
+
   type Query {
-      users: [User!]!
-      me:User!
-      jobs:[JobPosting!]
-      jobPostingFeed(cursor:String,province:String!,city:String!,town:String!,category:String!):JobPostingFeed
-      jobPosting(id:ID!):JobPosting!
-      
+    users: [User!]!
+    searchServiceProviderbyName(name:String!): [User!]!
+    searchServiceProviderbyProfession(profession:String!): [User!]!
+    viewAllServiceProviders:[User!]!
+    me: User!
+    pendingServiceRequestsForMe:[ServiceRequest!]
+    acceptedServiceRequestsForMe:[ServiceRequest!]
+    pendingServiceRequestsbyMe:[ServiceRequest!]
+    acceptedServiceRequestsbyMe:[ServiceRequest!]
+
   }
+
   type Mutation {
-      signUp(username: String!, email: String!, password: String!): String!
-      signIn(email:String!,password:String!):String!
-      makeMeServiceProvider(nic:String!,profession:String!,province:String!, city:String!,town:String!,bio:String):User!  
-      addLocation(
-        address: String!
+    signUp(username: String!, email: String!, password: String!): String!
+
+    signIn(email: String!, password: String!): String!
+
+    makeMeServiceProvider(
+      nic: String!
+      profession: String!
+      province: String!
         city: String!
         town: String!
-        postalCode: String!
-      ): ID!
+        bio: String
+      ): User!
 
-      registerServiceRequester(
-        username: String!
-        email: String!
-        contactNum: String!
-        address: String!
-        city: String!
-        town: String!
-        postalCode: String!
-        password: String!
-        confirmPassword: String!
-      ): String!
+    registerServiceRequester(
+      contactNum: String!
+      address: String!
+      city: String!
+      postalCode: String!
+    ): User!
 
-      loginServiceRequester(
-        username: String!
-        password: String!
-      ): ServiceRequesterUser!
+    createServiceRequest(
+      provider_id: ID
+      date:String
+      time:String
+      payMethod:String
+      task: String!
+      min_price:String
+      max_price:String
+      image1: String
+      image2: String
+      image3: String
+    ): ServiceRequest!
 
-      deleteServiceRequester(user_id: ID!): String!
-      
-#----------------------------------------------------------Job Posting mutations ---------------------------------------------------------
-      createJobPosting(province:String!,city:String!,town:String!,
-      category:String!,skills:[String],description:String!,lowerLimit:Float!,upperLimit:Float!):JobPosting!
-      
+    createBiddingJob(
+      date:String
+      time:String
+      payMethod:String
+      task: String!
+      min_price:String
+      max_price:String
+      image1: String
+      image2: String
+      image3: String
+    ): ServiceRequest!
   }
 `;

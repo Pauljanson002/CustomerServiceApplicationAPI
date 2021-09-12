@@ -8,8 +8,9 @@ const job_posting_mutations = {
       // if(!foundUser.roles.includes("service_requester")){
       //   throw new ForbiddenError("You must be registered as service requester to create a job posting")
       // }
-      const {province,city,town,category,skills,description,lowerLimit,upperLimit} = args
+      const {heading,province,city,town,category,skills,description,lowerLimit,upperLimit} = args
       const jobPosting = await models.JobPosting.create({
+        heading,
         location:{
           province,city,town
         },

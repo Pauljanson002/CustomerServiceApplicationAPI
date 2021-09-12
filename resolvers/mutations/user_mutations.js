@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const {AuthenticationError,ForbiddenError} = require('apollo-server-express')
 
-const user_mutations = {
+const user_mutations ={
   signUp: async (parent, { username, email, password }, { models }) => {
     email = email.trim().toLowerCase();
     const hashed = await bcrypt.hash(password, 10);
@@ -51,6 +51,33 @@ const user_mutations = {
     },{
       new:false
     });
+
+  },
+
+  registerServiceRequester:async (parent,{
+      contactNum,
+      address,
+      city,
+      postalCode,
+  },{models,user})=>{
+    if(!user){
+      throw new AuthenticationError("You are not registered to become a service provider")
+    }
+    console.log(user);
+    return await models.User.findOneAndUpdate({
+      _id:user.id
+    },{
+      $set:{
+        contactNum,address,city,postalCode,
+        
+      },
+      $addToSet:{
+        roles:"service_requester"
+      }
+    },{
+      new:false
+    });
+
   }
 }
 

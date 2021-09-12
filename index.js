@@ -16,6 +16,12 @@ const db = require('./db');
 db.connect(DB_HOST);
 const models = require('./models')
 
+
+
+
+
+
+
 // Setting up GraphQL server
 // Apollo server for graph ql
 const {ApolloServer} = require('apollo-server-express');
