@@ -50,7 +50,6 @@ module.exports = gql`
       jobPosting:JobPosting
       state:String
   }
-  type ServiceRequest {
 
   type ServiceRequest {
     id: ID!
