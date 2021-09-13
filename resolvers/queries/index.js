@@ -3,11 +3,13 @@ const user_queries = require("./user_queries")
 const job_posting_queries = require("./job_posting_queries")
 const service_requester_queries=require("./service_requester_queries");
 const service_provider_queries = require('./service_provider_queries');
+const job_bid_queries = require("./job_bid_queries")
 module.exports = {
   ...user_queries,
   ...job_posting_queries,
   ...service_requester_queries,
   ...service_provider_queries,
+  ...job_bid_queries,
   me:async (parent,args,{models,user})=>{
     if(user){
       return await models.User.findById(user.id);

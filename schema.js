@@ -67,24 +67,26 @@ module.exports = gql`
   }
 
   type Query {
-    users: [User!]!
-    searchServiceProviderbyName(name: String!): [User!]!
-    searchServiceProviderbyProfession(profession: String!): [User!]!
-    viewAllServiceProviders: [User!]!
-    me: User!
-    pendingServiceRequestsForMe: [ServiceRequest!]
-    acceptedServiceRequestsForMe: [ServiceRequest!]
-    pendingServiceRequestsbyMe: [ServiceRequest!]
-    acceptedServiceRequestsbyMe: [ServiceRequest!]
-    jobs: [JobPosting]
-    jobPostingFeed(
-      cursor: String
-      province: String!
-      city: String!
-      town: String!
-      category: String!
-    ): JobPostingFeed
-    jobPosting(id: ID!): JobPosting!
+      users: [User!]!
+      searchServiceProviderbyName(name: String!): [User!]!
+      searchServiceProviderbyProfession(profession: String!): [User!]!
+      viewAllServiceProviders: [User!]!
+      me: User!
+      pendingServiceRequestsForMe: [ServiceRequest!]
+      acceptedServiceRequestsForMe: [ServiceRequest!]
+      pendingServiceRequestsbyMe: [ServiceRequest!]
+      acceptedServiceRequestsbyMe: [ServiceRequest!]
+      jobs: [JobPosting]
+      jobPostingFeed(
+        cursor: String
+        province: String!
+        city: String!
+        town: String!
+        category: String!
+      ): JobPostingFeed
+      jobPosting(id: ID!): JobPosting!
+      getMyBids:[JobBid]
+      
   }
 
   type Mutation {
