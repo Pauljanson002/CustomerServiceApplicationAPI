@@ -75,6 +75,7 @@ module.exports = gql`
   }
 
   type Query {
+
     users: [User!]!
     searchServiceProviderbyName(name: String!): [User!]!
     searchServiceProviderbyProfession(profession: String!): [User!]!
@@ -94,6 +95,9 @@ module.exports = gql`
     ): JobPostingFeed
     jobPosting(id: ID!): JobPosting!
     viewAllServiceTypes:[Service]
+    getMyBids:[JobBid]
+
+      
   }
 
   type Mutation {

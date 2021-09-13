@@ -1,6 +1,7 @@
 const {AuthenticationError,ForbiddenError} = require('apollo-server-express')
 const models = require('../models')
-const checkPermission = async (user,role)=>{
+const util = {
+  checkPermission:async (user,role)=>{
     if(!user){
       throw new AuthenticationError("You are not logged in")
     }
@@ -12,6 +13,16 @@ const checkPermission = async (user,role)=>{
       throw new ForbiddenError("You are not permitted to use this feature , you are not "+role)
     }
     return foundUser
+},
+  checkOwnership:async (user,id)=>{
+    if(!user){
+      throw  new AuthenticationError("You are not logged in")
+    }
+    if(user.id !== id){
+      throw new ForbiddenError("You have no ownership")
+    }
+  }
+
 
 }
-module.exports = checkPermission
+module.exports = util

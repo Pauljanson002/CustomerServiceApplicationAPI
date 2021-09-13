@@ -1,5 +1,5 @@
 const {AuthenticationError,ForbiddenError} = require('apollo-server-express')
-const checkPermission = require('../util')
+const {checkPermission}= require('../util')
 const job_bid_mutations = {
   createJobBid:async (parent,args,{models,user})=>{
 

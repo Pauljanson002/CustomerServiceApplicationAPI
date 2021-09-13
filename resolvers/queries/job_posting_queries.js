@@ -1,5 +1,5 @@
 const {AuthenticationError,ForbiddenError} = require('apollo-server-express')
-const checkPermission = require('../util')
+const {checkPermission} = require('../util')
 module.exports = {
   jobs:async (parent,args,{models,user})=>{
     return models.JobPosting.find().limit(100)
