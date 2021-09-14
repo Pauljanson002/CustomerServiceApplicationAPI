@@ -66,7 +66,16 @@ module.exports = gql`
     image3: String
   }
 
+  type Service{
+    id:ID!
+    service_name:String!
+    description:String!
+    user_type:String
+    image:String
+  }
+
   type Query {
+
     users: [User!]!
     searchServiceProviderbyName(name: String!): [User!]!
     searchServiceProviderbyProfession(profession: String!): [User!]!
@@ -85,6 +94,10 @@ module.exports = gql`
       category: String!
     ): JobPostingFeed
     jobPosting(id: ID!): JobPosting!
+    viewAllServiceTypes:[Service]
+    getMyBids:[JobBid]
+
+      
   }
 
   type Mutation {
@@ -150,5 +163,11 @@ module.exports = gql`
       detailedBreakdown: String
       jobPosting: ID!
     ): JobBid!
+
+    createService(
+      service_name:String
+      description:String
+      user_type:String
+      image:String): Service!
   }
 `;
