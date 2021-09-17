@@ -122,7 +122,7 @@ const service_request_mutations = {
 
 acceptServiceRequest:async(
     parent,
-    {id},
+    {id,estimate},
     {models,user}
 )=>{
     if(!user){
@@ -137,7 +137,8 @@ acceptServiceRequest:async(
       },
       {
         $set: {
-          state:"Accepted"
+          state:"Accepted",
+          estimate:estimate
         }
       },
       {

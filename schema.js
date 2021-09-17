@@ -71,6 +71,7 @@ module.exports = gql`
     image2: String
     image3: String
     state:String
+    estimate:String
   }
 
   type Service {
@@ -193,6 +194,7 @@ module.exports = gql`
 
       acceptServiceRequest(
         id:ID
+        estimate:String
       ):ServiceRequest!
 
       rescheduleServiceRequest(
