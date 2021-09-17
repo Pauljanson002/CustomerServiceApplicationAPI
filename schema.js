@@ -18,6 +18,11 @@ module.exports = gql`
     service_providing_status: Boolean
     roles: [String]
   }
+  type Admin {
+    id: ID!
+    username: String!
+    email: String!
+  }
   type Location {
     province: String!
     city: String!
@@ -66,16 +71,15 @@ module.exports = gql`
     image3: String
   }
 
-  type Service{
-    id:ID!
-    service_name:String!
-    description:String!
-    user_type:String
-    image:String
+  type Service {
+    id: ID!
+    service_name: String!
+    description: String!
+    user_type: String
+    image: String
   }
 
   type Query {
-
     users: [User!]!
     searchServiceProviderbyName(name: String!): [User!]!
     searchServiceProviderbyProfession(profession: String!): [User!]!
@@ -94,16 +98,18 @@ module.exports = gql`
       category: String!
     ): JobPostingFeed
     jobPosting(id: ID!): JobPosting!
-    viewAllServiceTypes:[Service]
-    getMyBids:[JobBid]
-
-      
+    viewAllServiceTypes: [Service]
+    getMyBids: [JobBid]
   }
 
   type Mutation {
     signUp(username: String!, email: String!, password: String!): String!
 
     signIn(email: String!, password: String!): String!
+
+    adminSignUp(username: String!, email: String!, password: String!): String!
+
+    adminSignIn(email: String!, password: String!): String!
 
     makeMeServiceProvider(
       nic: String!
@@ -155,7 +161,7 @@ module.exports = gql`
       description: String!
       lowerLimit: Float!
       upperLimit: Float!
-      payMethod:String  
+      payMethod: String
     ): JobPosting!
     createJobBid(
       proposedAmount: Float!
@@ -165,9 +171,10 @@ module.exports = gql`
     ): JobBid!
 
     createService(
-      service_name:String
-      description:String
-      user_type:String
-      image:String): Service!
+      service_name: String
+      description: String
+      user_type: String
+      image: String
+    ): Service!
   }
 `;
