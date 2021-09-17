@@ -12,6 +12,7 @@ module.exports = gql`
     contactNum: String
     address: String
     province: String
+    postalCode:String
     city: String
     town: String
     bio: String
@@ -64,6 +65,7 @@ module.exports = gql`
     image1: String
     image2: String
     image3: String
+    state:String
   }
 
   type Service{
@@ -96,6 +98,8 @@ module.exports = gql`
     jobPosting(id: ID!): JobPosting!
     viewAllServiceTypes:[Service]
     getMyBids:[JobBid]
+    getUserbyId(id:ID!):User!
+    getServiceRequestByID(id:ID!):ServiceRequest!
 
       
   }
@@ -169,5 +173,33 @@ module.exports = gql`
       description:String
       user_type:String
       image:String): Service!
+
+      cancelServiceRequest(
+        id:ID
+      ):ServiceRequest!
+
+      rejectServiceRequest(
+        id:ID
+      ):ServiceRequest!
+
+      acceptServiceRequest(
+        id:ID
+      ):ServiceRequest!
+
+      rescheduleServiceRequest(
+        id:ID
+        date:String!
+        time:String!
+      ):ServiceRequest!
+
+      editServiceRequest(
+        id:ID
+        task:String!
+        image1:String
+        image2:String
+        image3:String
+      ):ServiceRequest!
+
+
   }
 `;

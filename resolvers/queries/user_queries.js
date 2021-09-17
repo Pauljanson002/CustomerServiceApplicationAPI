@@ -44,4 +44,18 @@ module.exports ={
     //console.log(users);
     return users;
   },
+
+  getUserbyId: async (
+    parent,
+    { id },
+    { models, user }
+  ) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
+
+    const user_result= await models.User.findById(id);
+    //console.log(users);
+    return user_result;
+  },
 }

@@ -49,7 +49,7 @@ const ServiceRequestSchema = new mongoose.Schema(
     
     state: {
         type:String,
-        enum:["Pending","Accepted","Started","Completed"],
+        enum:["Pending","Accepted","Started","Completed","Canceled","Rejected"],
         default:"Pending"
     },    
   },
