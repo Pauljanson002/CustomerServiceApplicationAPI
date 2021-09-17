@@ -16,8 +16,8 @@ const service_request_mutations = {
         'You are not registered to become a service provider'
       );
     }
-    console.log(user);
-    return await models.ServiceRequests.findOneAndUpdate(
+    console.log("rescheduling");
+    const rescheduledReq= await models.ServiceRequests.findOneAndUpdate(
       {
         _id: id
       },
@@ -31,6 +31,8 @@ const service_request_mutations = {
         new: false
       }
     );
+
+    return rescheduledReq;
   },
 
   editServiceRequest:async(
@@ -44,7 +46,7 @@ const service_request_mutations = {
         );
       }
       console.log(user);
-      return await models.ServiceRequests.findOneAndUpdate(
+      const editedReq= await models.ServiceRequests.findOneAndUpdate(
         {
           _id: id
         },
@@ -60,6 +62,7 @@ const service_request_mutations = {
           new: false
         }
       );
+      return editedReq;
 
   },
 
@@ -74,7 +77,7 @@ const service_request_mutations = {
           );
       }
 
-      return await models.ServiceRequests.findOneAndUpdate(
+      const canceledReq= await models.ServiceRequests.findOneAndUpdate(
         {
           _id: id
         },
@@ -87,6 +90,8 @@ const service_request_mutations = {
           new: false
         }
       );
+
+      return canceledReq;
   },
   rejectServiceRequest:async(
     parent,
@@ -99,7 +104,7 @@ const service_request_mutations = {
         );
     }
 
-    return await models.ServiceRequests.findOneAndUpdate(
+    const rejectedReq= await models.ServiceRequests.findOneAndUpdate(
       {
         _id: id
       },
@@ -112,6 +117,7 @@ const service_request_mutations = {
         new: false
       }
     );
+    return rejectedReq;
 },
 
 acceptServiceRequest:async(
@@ -125,7 +131,7 @@ acceptServiceRequest:async(
         );
     }
 
-    return await models.ServiceRequests.findOneAndUpdate(
+    const acceptedReq= await models.ServiceRequests.findOneAndUpdate(
       {
         _id: id
       },
@@ -138,6 +144,8 @@ acceptServiceRequest:async(
         new: false
       }
     );
+
+    return acceptedReq;
 },
 
 };
