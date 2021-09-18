@@ -1,14 +1,18 @@
 const User = require('./user');
-const JobPosting = require('./JobPosting')
-const JobBid = require('./JobBid')
-const ServiceRequests=require('./serviceRequests')
-const Service=require('./service')
+const Admin = require('./admin');
+const JobPosting = require('./JobPosting');
+const JobBid = require('./JobBid');
+const ServiceRequests = require('./serviceRequests');
+const Service = require('./service');
+const Complaint = require('./complaint');
 const models = {
   User,
   JobPosting,
   JobBid,
   ServiceRequests,
-  Service
+  Service,
+  Admin,
+  Complaint
 };
 
 module.exports = models;

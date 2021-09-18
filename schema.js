@@ -12,7 +12,7 @@ module.exports = gql`
     contactNum: String
     address: String
     province: String
-    postalCode:String
+    postalCode: String
     city: String
     town: String
     bio: String
@@ -70,16 +70,24 @@ module.exports = gql`
     image1: String
     image2: String
     image3: String
-    state:String
-    estimate:String
+    state: String
+    estimate: String
   }
 
   type Service {
     id: ID!
     service_name: String!
     description: String!
-    user_type: String
+    user_type: String!
     image: String
+  }
+
+  type Complaint {
+    id: ID!
+    complainer: String!
+    victim: String!
+    complaint: String!
+    createdAt: DateTime!
   }
 
   type Query {
@@ -101,12 +109,11 @@ module.exports = gql`
       category: String!
     ): JobPostingFeed
     jobPosting(id: ID!): JobPosting!
-    viewAllServiceTypes:[Service]
-    getMyBids:[JobBid]
-    getUserbyId(id:ID!):User!
-    getServiceRequestByID(id:ID!):ServiceRequest!
-
-
+    viewAllServiceTypes: [Service]
+    getMyBids: [JobBid]
+    getUserbyId(id: ID!): User!
+    getServiceRequestByID(id: ID!): ServiceRequest!
+    viewAllComplaints: [Complaint!]!
   }
 
   type Mutation {
@@ -158,6 +165,7 @@ module.exports = gql`
       image2: String
       image3: String
     ): ServiceRequest!
+
     createJobPosting(
       heading: String!
       province: String!
@@ -170,6 +178,7 @@ module.exports = gql`
       upperLimit: Float!
       payMethod: String
     ): JobPosting!
+
     createJobBid(
       proposedAmount: Float!
       proposedDate: String!
@@ -178,39 +187,36 @@ module.exports = gql`
     ): JobBid!
 
     createService(
+      service_name: String
+      description: String
+      user_type: String
+      image: String
+    ): Service!
 
-      service_name:String
-      description:String
-      user_type:String
-      image:String): Service!
+    cancelServiceRequest(id: ID): ServiceRequest!
 
-      cancelServiceRequest(
-        id:ID
-      ):ServiceRequest!
+    rejectServiceRequest(id: ID): ServiceRequest!
 
-      rejectServiceRequest(
-        id:ID
-      ):ServiceRequest!
+    acceptServiceRequest(id: ID, estimate: String): ServiceRequest!
 
-      acceptServiceRequest(
-        id:ID
-        estimate:String
-      ):ServiceRequest!
+    rescheduleServiceRequest(
+      id: ID
+      date: String!
+      time: String!
+    ): ServiceRequest!
 
-      rescheduleServiceRequest(
-        id:ID
-        date:String!
-        time:String!
-      ):ServiceRequest!
+    editServiceRequest(
+      id: ID
+      task: String!
+      image1: String
+      image2: String
+      image3: String
+    ): ServiceRequest!
 
-      editServiceRequest(
-        id:ID
-        task:String!
-        image1:String
-        image2:String
-        image3:String
-      ):ServiceRequest!
-
-
+    makeComplaint(
+      complainer: String
+      victim: String
+      complaint: String
+    ): Complaint!
   }
 `;
