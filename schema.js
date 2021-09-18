@@ -12,11 +12,17 @@ module.exports = gql`
     contactNum: String
     address: String
     province: String
+    postalCode:String
     city: String
     town: String
     bio: String
     service_providing_status: Boolean
     roles: [String]
+  }
+  type Admin {
+    id: ID!
+    username: String!
+    email: String!
   }
   type Location {
     province: String!
@@ -64,18 +70,19 @@ module.exports = gql`
     image1: String
     image2: String
     image3: String
+    state:String
+    estimate:String
   }
 
-  type Service{
-    id:ID!
-    service_name:String!
-    description:String!
-    user_type:String
-    image:String
+  type Service {
+    id: ID!
+    service_name: String!
+    description: String!
+    user_type: String
+    image: String
   }
 
   type Query {
-
     users: [User!]!
     searchServiceProviderbyName(name: String!): [User!]!
     searchServiceProviderbyProfession(profession: String!): [User!]!
@@ -96,14 +103,20 @@ module.exports = gql`
     jobPosting(id: ID!): JobPosting!
     viewAllServiceTypes:[Service]
     getMyBids:[JobBid]
+    getUserbyId(id:ID!):User!
+    getServiceRequestByID(id:ID!):ServiceRequest!
 
-      
+
   }
 
   type Mutation {
     signUp(username: String!, email: String!, password: String!): String!
 
     signIn(email: String!, password: String!): String!
+
+    adminSignUp(username: String!, email: String!, password: String!): String!
+
+    adminSignIn(email: String!, password: String!): String!
 
     makeMeServiceProvider(
       nic: String!
@@ -155,7 +168,7 @@ module.exports = gql`
       description: String!
       lowerLimit: Float!
       upperLimit: Float!
-      payMethod:String  
+      payMethod: String
     ): JobPosting!
     createJobBid(
       proposedAmount: Float!
@@ -165,9 +178,39 @@ module.exports = gql`
     ): JobBid!
 
     createService(
+
       service_name:String
       description:String
       user_type:String
       image:String): Service!
+
+      cancelServiceRequest(
+        id:ID
+      ):ServiceRequest!
+
+      rejectServiceRequest(
+        id:ID
+      ):ServiceRequest!
+
+      acceptServiceRequest(
+        id:ID
+        estimate:String
+      ):ServiceRequest!
+
+      rescheduleServiceRequest(
+        id:ID
+        date:String!
+        time:String!
+      ):ServiceRequest!
+
+      editServiceRequest(
+        id:ID
+        task:String!
+        image1:String
+        image2:String
+        image3:String
+      ):ServiceRequest!
+
+
   }
 `;
