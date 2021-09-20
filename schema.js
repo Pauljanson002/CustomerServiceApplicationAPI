@@ -100,10 +100,14 @@ module.exports = gql`
     acceptedServiceRequestsForMe: [ServiceRequest!]
     startedServiceRequestsForMe: [ServiceRequest!]
     completedServiceRequestsForMe: [ServiceRequest!]
+    canceledServiceRequestsForMe: [ServiceRequest!]
+    rejectedServiceRequestsForMe: [ServiceRequest!]
     pendingServiceRequestsbyMe: [ServiceRequest!]
     acceptedServiceRequestsbyMe: [ServiceRequest!]
     startedServiceRequestsbyMe: [ServiceRequest!]
     completedServiceRequestsbyMe: [ServiceRequest!]
+    canceledServiceRequestsbyMe: [ServiceRequest!]
+    rejectedServiceRequestsbyMe: [ServiceRequest!]
     jobs: [JobPosting]
     jobPostingFeed(
       cursor: String

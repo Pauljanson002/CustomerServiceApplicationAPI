@@ -61,6 +61,34 @@ const service_requester_queries = {
       console.log(requests);
       return requests;
     },
+    canceledServiceRequestsbyMe: async (parent, args, { models, user }) => {
+      if (!user) {
+        throw new AuthenticationError(
+          'You are not a registered user'
+        );
+      }
+
+      const requests= await models.ServiceRequests.find({
+        state: 'Canceeled',
+        requester_id: user.id
+      }).limit(100);
+      console.log(requests);
+      return requests;
+    },
+    rejectedServiceRequestsbyMe: async (parent, args, { models, user }) => {
+      if (!user) {
+        throw new AuthenticationError(
+          'You are not a registered user'
+        );
+      }
+
+      const requests= await models.ServiceRequests.find({
+        state: 'Canceled',
+        requester_id: user.id
+      }).limit(100);
+      console.log(requests);
+      return requests;
+    },
 
   };
 
