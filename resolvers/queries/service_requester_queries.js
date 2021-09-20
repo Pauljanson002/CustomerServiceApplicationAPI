@@ -32,7 +32,36 @@ const service_requester_queries = {
       }).limit(100);
       console.log(requests);
       return requests;
-    }
+    },
+    startedServiceRequestsbyMe: async (parent, args, { models, user }) => {
+      if (!user) {
+        throw new AuthenticationError(
+          'You are not a registered user'
+        );
+      }
+
+      const requests= await models.ServiceRequests.find({
+        state: 'Started',
+        requester_id: user.id
+      }).limit(100);
+      console.log(requests);
+      return requests;
+    },
+    completedServiceRequestsbyMe: async (parent, args, { models, user }) => {
+      if (!user) {
+        throw new AuthenticationError(
+          'You are not a registered user'
+        );
+      }
+
+      const requests= await models.ServiceRequests.find({
+        state: 'Completed',
+        requester_id: user.id
+      }).limit(100);
+      console.log(requests);
+      return requests;
+    },
+
   };
 
   module.exports = service_requester_queries;

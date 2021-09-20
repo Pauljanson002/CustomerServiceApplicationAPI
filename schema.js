@@ -98,8 +98,12 @@ module.exports = gql`
     me: User!
     pendingServiceRequestsForMe: [ServiceRequest!]
     acceptedServiceRequestsForMe: [ServiceRequest!]
+    startedServiceRequestsForMe: [ServiceRequest!]
+    completedServiceRequestsForMe: [ServiceRequest!]
     pendingServiceRequestsbyMe: [ServiceRequest!]
     acceptedServiceRequestsbyMe: [ServiceRequest!]
+    startedServiceRequestsbyMe: [ServiceRequest!]
+    completedServiceRequestsbyMe: [ServiceRequest!]
     jobs: [JobPosting]
     jobPostingFeed(
       cursor: String
