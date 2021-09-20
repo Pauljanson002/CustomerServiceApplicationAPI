@@ -8,6 +8,7 @@ module.exports = gql`
     username: String!
     email: String!
     nic: String
+    fullname:String
     profession: String
     contactNum: String
     address: String
@@ -18,6 +19,9 @@ module.exports = gql`
     bio: String
     service_providing_status: Boolean
     roles: [String]
+    provider_rating:String
+    provider_review_count:String
+    requester_rating:String
   }
   type Admin {
     id: ID!
@@ -94,6 +98,7 @@ module.exports = gql`
     users: [User!]!
     searchServiceProviderbyName(name: String!): [User!]!
     searchServiceProviderbyProfession(profession: String!): [User!]!
+    searchServiceProviderbyProfessioninProvince(profession: String!, province:String!): [User!]!
     viewAllServiceProviders: [User!]!
     me: User!
     pendingServiceRequestsForMe: [ServiceRequest!]

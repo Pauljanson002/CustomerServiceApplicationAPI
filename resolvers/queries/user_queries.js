@@ -30,6 +30,19 @@ module.exports ={
     //console.log(users);
     return users;
   },
+  searchServiceProviderbyProfessioninProvince: async (
+    parent,
+    { profession,province },
+    { models, user }
+  ) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
+
+    const users= await models.User.find({ profession: profession ,province:province });
+    //console.log(users);
+    return users;
+  },
 
   viewAllServiceProviders: async (
     parent,
