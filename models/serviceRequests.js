@@ -42,6 +42,7 @@ const ServiceRequestSchema = new mongoose.Schema(
     payMethod: String,
     date: String,
     time: String,
+    location:String,
     estimate:String,
     hasAdvancedPaid:{
       type:Boolean,

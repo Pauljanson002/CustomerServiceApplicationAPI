@@ -71,6 +71,7 @@ module.exports = gql`
     task: String!
     min_price: String
     max_price: String
+    location:String
     image1: String
     image2: String
     image3: String
@@ -162,6 +163,7 @@ module.exports = gql`
       task: String!
       min_price: String
       max_price: String
+      location:String
       image1: String
       image2: String
       image3: String

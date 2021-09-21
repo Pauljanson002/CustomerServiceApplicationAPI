@@ -69,7 +69,7 @@ const service_requester_queries = {
       }
 
       const requests= await models.ServiceRequests.find({
-        state: 'Canceeled',
+        state: 'Canceled',
         requester_id: user.id
       }).limit(100);
       console.log(requests);
