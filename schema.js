@@ -114,6 +114,7 @@ module.exports = gql`
     getUserbyId(id: ID!): User!
     getServiceRequestByID(id: ID!): ServiceRequest!
     viewAllComplaints: [Complaint!]!
+    viewAllServices: [Service!]!
   }
 
   type Mutation {
