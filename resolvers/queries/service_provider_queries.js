@@ -38,7 +38,72 @@ const service_provider_queries = {
     }).limit(100);
     console.log(acceptedRequests);
     return acceptedRequests;
+  },
+  startedServiceRequestsForMe: async (parent, args, { models, user }) => {
+    if(!user){
+      throw new AuthenticationError("Please login to continue")
+    }
+    const foundUser = await models.User.findById(user.id)
+    if(!foundUser.roles.includes("service_provider")){
+      throw new ForbiddenError("You don't have enough permission to do this")
+    }
+    
+    const acceptedRequests= await ServiceRequests.find({
+      state: 'Started',
+      provider_id: user.id
+    }).limit(100);
+    console.log(acceptedRequests);
+    return acceptedRequests;
+  },
+  completedServiceRequestsForMe: async (parent, args, { models, user }) => {
+    if(!user){
+      throw new AuthenticationError("Please login to continue")
+    }
+    const foundUser = await models.User.findById(user.id)
+    if(!foundUser.roles.includes("service_provider")){
+      throw new ForbiddenError("You don't have enough permission to do this")
+    }
+    
+    const acceptedRequests= await ServiceRequests.find({
+      state: 'Completed',
+      provider_id: user.id
+    }).limit(100);
+    console.log(acceptedRequests);
+    return acceptedRequests;
+  },
+  canceledServiceRequestsForMe: async (parent, args, { models, user }) => {
+    if(!user){
+      throw new AuthenticationError("Please login to continue")
+    }
+    const foundUser = await models.User.findById(user.id)
+    if(!foundUser.roles.includes("service_provider")){
+      throw new ForbiddenError("You don't have enough permission to do this")
+    }
+    
+    const acceptedRequests= await ServiceRequests.find({
+      state: 'Canceled',
+      provider_id: user.id
+    }).limit(100);
+    console.log(acceptedRequests);
+    return acceptedRequests;
+  },
+  rejectedServiceRequestsForMe: async (parent, args, { models, user }) => {
+    if(!user){
+      throw new AuthenticationError("Please login to continue")
+    }
+    const foundUser = await models.User.findById(user.id)
+    if(!foundUser.roles.includes("service_provider")){
+      throw new ForbiddenError("You don't have enough permission to do this")
+    }
+    
+    const acceptedRequests= await ServiceRequests.find({
+      state: 'Rejected',
+      provider_id: user.id
+    }).limit(100);
+    console.log(acceptedRequests);
+    return acceptedRequests;
   }
+
 };
 
 module.exports = service_provider_queries;
