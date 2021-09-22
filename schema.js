@@ -240,6 +240,12 @@ module.exports = gql`
       requestReview: String
     ): ServiceRequest!
 
+    customerfeedbackServiceRequest(
+      id: ID
+      customerRating: Int
+      customerReview: String
+    ): ServiceRequest!
+
     makeComplaint(
       complainer: String
       victim: String

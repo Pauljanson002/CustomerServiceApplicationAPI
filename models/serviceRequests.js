@@ -45,6 +45,8 @@ const ServiceRequestSchema = new mongoose.Schema(
     location:String,
     requestReview:String,
     requestRating:Number,
+    customerReview:String,
+    customerRating:Number,
     estimate:String,
     hasAdvancedPaid:{
       type:Boolean,
