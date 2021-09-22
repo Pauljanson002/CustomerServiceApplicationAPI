@@ -218,6 +218,8 @@ module.exports = gql`
 
     acceptServiceRequest(id: ID, estimate: String): ServiceRequest!
 
+    startServiceRequest(id: ID, estimate: String): ServiceRequest!
+
     rescheduleServiceRequest(
       id: ID
       date: String!

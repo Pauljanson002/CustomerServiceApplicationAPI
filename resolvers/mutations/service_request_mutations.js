@@ -150,6 +150,33 @@ const service_request_mutations = {
     return rejectedReq;
 },
 
+startServiceRequest:async(
+  parent,
+  {id},
+  {models,user}
+)=>{
+  if(!user){
+    throw new AuthenticationError(
+        'You are not registered to become a service provider'
+      );
+  }
+
+  const startedReq= await models.ServiceRequests.findOneAndUpdate(
+    {
+      _id: id
+    },
+    {
+      $set: {
+        state:"Started"
+      }
+    },
+    {
+      new: false
+    }
+  );
+  return startedReq;
+},
+
 acceptServiceRequest:async(
     parent,
     {id,estimate},
