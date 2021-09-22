@@ -69,7 +69,7 @@ const service_requester_queries = {
       }
 
       const requests= await models.ServiceRequests.find({
-        state: 'Canceeled',
+        state: 'Canceled',
         requester_id: user.id
       }).limit(100);
       console.log(requests);
@@ -83,7 +83,21 @@ const service_requester_queries = {
       }
 
       const requests= await models.ServiceRequests.find({
-        state: 'Canceled',
+        state: 'Rejected',
+        requester_id: user.id
+      }).limit(100);
+      console.log(requests);
+      return requests;
+    },
+    reviewedServiceRequestsbyMe: async (parent, args, { models, user }) => {
+      if (!user) {
+        throw new AuthenticationError(
+          'You are not a registered user'
+        );
+      }
+
+      const requests= await models.ServiceRequests.find({
+        state: 'Reviewed',
         requester_id: user.id
       }).limit(100);
       console.log(requests);

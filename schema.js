@@ -71,11 +71,14 @@ module.exports = gql`
     task: String!
     min_price: String
     max_price: String
+    location:String
     image1: String
     image2: String
     image3: String
     state: String
     estimate: String
+    requestRating:Int
+    requestReview:String
   }
 
   type Service {
@@ -107,12 +110,14 @@ module.exports = gql`
     completedServiceRequestsForMe: [ServiceRequest!]
     canceledServiceRequestsForMe: [ServiceRequest!]
     rejectedServiceRequestsForMe: [ServiceRequest!]
+    reviewedServiceRequestsForMe: [ServiceRequest!]
     pendingServiceRequestsbyMe: [ServiceRequest!]
     acceptedServiceRequestsbyMe: [ServiceRequest!]
     startedServiceRequestsbyMe: [ServiceRequest!]
     completedServiceRequestsbyMe: [ServiceRequest!]
     canceledServiceRequestsbyMe: [ServiceRequest!]
     rejectedServiceRequestsbyMe: [ServiceRequest!]
+    reviewedServiceRequestsbyMe: [ServiceRequest!]
     jobs: [JobPosting]
     jobPostingFeed(
       cursor: String
@@ -163,6 +168,7 @@ module.exports = gql`
       task: String!
       min_price: String
       max_price: String
+      location:String
       image1: String
       image2: String
       image3: String
@@ -213,6 +219,8 @@ module.exports = gql`
 
     acceptServiceRequest(id: ID, estimate: String): ServiceRequest!
 
+    startServiceRequest(id: ID, estimate: String): ServiceRequest!
+
     rescheduleServiceRequest(
       id: ID
       date: String!
@@ -225,6 +233,12 @@ module.exports = gql`
       image1: String
       image2: String
       image3: String
+    ): ServiceRequest!
+
+    feedbackServiceRequest(
+      id: ID
+      requestRating: Int
+      requestReview: String
     ): ServiceRequest!
 
     makeComplaint(

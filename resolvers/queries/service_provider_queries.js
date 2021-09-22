@@ -102,6 +102,22 @@ const service_provider_queries = {
     }).limit(100);
     console.log(acceptedRequests);
     return acceptedRequests;
+  },
+  reviewedServiceRequestsForMe: async (parent, args, { models, user }) => {
+    if(!user){
+      throw new AuthenticationError("Please login to continue")
+    }
+    const foundUser = await models.User.findById(user.id)
+    if(!foundUser.roles.includes("service_provider")){
+      throw new ForbiddenError("You don't have enough permission to do this")
+    }
+    
+    const reviewedRequests= await ServiceRequests.find({
+      state: 'Reviewed',
+      provider_id: user.id
+    }).limit(100);
+    console.log(reviewedRequests);
+    return reviewedRequests;
   }
 
 };
