@@ -65,6 +65,36 @@ const service_request_mutations = {
       return editedReq;
 
   },
+  feedbackServiceRequest:async(
+    parent,
+    {id,requestRating,requestReview},
+    {models,user}
+)=>{
+  if (!user) {
+      throw new AuthenticationError(
+        'You are not registered to become a service provider'
+      );
+    }
+    console.log(user);
+    const feedbackedReq= await models.ServiceRequests.findOneAndUpdate(
+      {
+        _id: id
+      },
+      {
+        $set: {
+          requestRating,
+          requestReview,
+          state:"Reviewed"
+         
+        }
+      },
+      {
+        new: false
+      }
+    );
+    return feedbackedReq;
+
+},
 
   cancelServiceRequest:async(
       parent,
