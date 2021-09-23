@@ -38,6 +38,10 @@ const UserSchema = new mongoose.Schema(
     service_providing_status:{
       type:Boolean,
       default:false
+    },
+    is_suspended:{
+      type:Boolean,
+      default:false
     }
   },
   {

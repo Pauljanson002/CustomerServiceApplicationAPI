@@ -91,8 +91,9 @@ module.exports = gql`
 
   type Complaint {
     id: ID!
-    complainer: String!
-    victim: String!
+    complainer: ID
+    victim: String
+    title:String
     complaint: String!
     createdAt: DateTime!
   }
@@ -247,9 +248,18 @@ module.exports = gql`
     ): ServiceRequest!
 
     makeComplaint(
-      complainer: String
+      complainer: ID
       victim: String
+      title:String
       complaint: String
     ): Complaint!
+
+    acceptServiceProvider(
+      provider_id:ID
+    ):User!
+
+    suspendServiceProvider(
+      provider_id:ID
+    ):User!
   }
 `;
