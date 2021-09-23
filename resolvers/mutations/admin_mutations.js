@@ -5,7 +5,7 @@ const {
   ForbiddenError
 } = require('apollo-server-express');
 
-const user_mutations = {
+const admin_mutations = {
   adminSignUp: async (parent, { username, email, password }, { models }) => {
     email = email.trim().toLowerCase();
     const hashed = await bcrypt.hash(password, 10);
@@ -37,3 +37,4 @@ const user_mutations = {
     return jwt.sign({ id: admin._id }, process.env.JWT_SECRET);
   }
 };
+module.exports = admin_mutations
