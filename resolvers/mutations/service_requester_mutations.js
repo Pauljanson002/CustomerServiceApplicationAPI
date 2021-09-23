@@ -10,11 +10,14 @@ const { User, ServiceRequests } = require('../../models');
 const service_requester_mutations = {
   createServiceRequest: async (
     parent,
-    { provider_id, date, time, payMethod, task,min_price,max_price,image1, image2, image3 },
+    { provider_id, date, time, payMethod, task,min_price,max_price,location,image1, image2, image3 },
     { models, user }
   ) => {
     if (!user) {
       throw new AuthenticationError('You are not registered');
+    }
+    if(user.id===provider_id){
+      throw new ForbiddenError("You are not allowed to send a request to yourself")
     }
     try {
       console.log(provider_id, date, time, payMethod, task,min_price,max_price,image1, image2, image3 );
@@ -27,6 +30,7 @@ const service_requester_mutations = {
         task,
         min_price,
         max_price,
+        location,
         image1,
         image2,
         image3

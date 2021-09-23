@@ -35,6 +35,42 @@ const admin_mutations = {
       throw new AuthenticationError('Error signing in : Invalid Password');
     }
     return jwt.sign({ id: admin._id }, process.env.JWT_SECRET);
+  },
+  createService: async (parent, args, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
+    try {
+      console.log(args.service_name);
+      const { service_name, description, user_type, image } = args;
+      const service = await models.Service.create({
+        service_name,
+        description,
+        user_type,
+        image
+      });
+      return service;
+    } catch (e) {
+      throw new Error('Error in creating the service.');
+    }
+  },
+  makeComplaint: async (parent, args, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
+    try {
+      console.log(args.complaint);
+      const { complainer, victim, complaint } = args;
+      const complain = await models.Complaint.create({
+        complainer,
+        victim,
+        complaint
+      });
+      return complain;
+    } catch (e) {
+      throw new Error('Error in creating the complain.');
+    }
   }
 };
-module.exports = admin_mutations
+
+module.exports = admin_mutations;
