@@ -253,5 +253,13 @@ module.exports = gql`
       title:String
       complaint: String
     ): Complaint!
+
+    acceptServiceProvider(
+      provider_id:ID
+    ):User!
+
+    suspendServiceProvider(
+      provider_id:ID
+    ):User!
   }
 `;
