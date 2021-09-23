@@ -60,10 +60,11 @@ const admin_mutations = {
     }
     try {
       console.log(args.complaint);
-      const { complainer, victim, complaint } = args;
+      const { complainer, victim, title, complaint } = args;
       const complain = await models.Complaint.create({
         complainer,
         victim,
+        title,
         complaint
       });
       return complain;
