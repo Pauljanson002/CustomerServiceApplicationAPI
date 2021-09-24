@@ -1,14 +1,20 @@
 const mongoose = require('mongoose');
+const Schema = require('mongoose').Schema;
 
 const ComplaintSchema = new mongoose.Schema(
   {
     complainer: {
-      type: String,
-      required: true
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'User'
     },
     victim: {
       type: String,
-      required: true
+      
+    },
+    title:{
+      type:String,
+      
     },
     complaint: {
       type: String,
