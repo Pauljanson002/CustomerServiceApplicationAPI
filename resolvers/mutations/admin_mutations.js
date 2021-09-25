@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {
@@ -79,10 +80,11 @@ const admin_mutations = {
     }
     try {
       console.log(args.complaint);
-      const { complainer, victim, complaint } = args;
+      const { complainer, victim, title, complaint } = args;
       const complain = await models.Complaint.create({
-        complainer,
+        complainer: mongoose.Types.ObjectId(user.id),
         victim,
+        title,
         complaint
       });
       return complain;
@@ -103,7 +105,6 @@ const admin_mutations = {
         _id: provider_id
       },
       {
-     
         $addToSet: {
           roles: 'service_provider'
         }
@@ -126,18 +127,15 @@ const admin_mutations = {
         _id: provider_id
       },
       {
-        $set:{
-          is_suspended:true
-          
-        },
-       
+        $set: {
+          is_suspended: true
+        }
       },
       {
         new: false
       }
     );
-  },
-
+  }
 };
 
 module.exports = admin_mutations;
