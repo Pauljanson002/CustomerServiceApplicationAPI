@@ -8,16 +8,20 @@ module.exports = gql`
     username: String!
     email: String!
     nic: String
+    fullname:String
     profession: String
     contactNum: String
     address: String
     province: String
-    postalCode:String
+    postalCode: String
     city: String
     town: String
     bio: String
     service_providing_status: Boolean
     roles: [String]
+    provider_rating:String
+    provider_review_count:String
+    requester_rating:String
   }
   type Admin {
     id: ID!
@@ -42,6 +46,8 @@ module.exports = gql`
     postedBy: User!
     description: String
     budgetRange: BudgetRange
+    updatedAt:DateTime 
+    state:String  
   }
   type JobPostingFeed {
     jobPostings: [JobPosting]!
@@ -49,12 +55,14 @@ module.exports = gql`
     hasNextPage: Boolean!
   }
   type JobBid {
+    id:ID!  
     proposedAmount: Float!
     proposedDate: DateTime!
     detailedBreakdown: String
     bidBy: User
     jobPosting: JobPosting
     state: String
+    updatedAt:DateTime  
   }
 
   type ServiceRequest {
@@ -67,31 +75,54 @@ module.exports = gql`
     task: String!
     min_price: String
     max_price: String
+    location:String
     image1: String
     image2: String
     image3: String
-    state:String
-    estimate:String
+    state: String
+    estimate: String
+    requestRating:Int
+    requestReview:String
   }
 
   type Service {
     id: ID!
     service_name: String!
     description: String!
-    user_type: String
+    user_type: String!
     image: String
+  }
+
+  type Complaint {
+    id: ID!
+    complainer: ID
+    victim: String
+    title:String
+    complaint: String!
+    createdAt: DateTime!
   }
 
   type Query {
     users: [User!]!
     searchServiceProviderbyName(name: String!): [User!]!
     searchServiceProviderbyProfession(profession: String!): [User!]!
+    searchServiceProviderbyProfessioninProvince(profession: String!, province:String!): [User!]!
     viewAllServiceProviders: [User!]!
     me: User!
     pendingServiceRequestsForMe: [ServiceRequest!]
     acceptedServiceRequestsForMe: [ServiceRequest!]
+    startedServiceRequestsForMe: [ServiceRequest!]
+    completedServiceRequestsForMe: [ServiceRequest!]
+    canceledServiceRequestsForMe: [ServiceRequest!]
+    rejectedServiceRequestsForMe: [ServiceRequest!]
+    reviewedServiceRequestsForMe: [ServiceRequest!]
     pendingServiceRequestsbyMe: [ServiceRequest!]
     acceptedServiceRequestsbyMe: [ServiceRequest!]
+    startedServiceRequestsbyMe: [ServiceRequest!]
+    completedServiceRequestsbyMe: [ServiceRequest!]
+    canceledServiceRequestsbyMe: [ServiceRequest!]
+    rejectedServiceRequestsbyMe: [ServiceRequest!]
+    reviewedServiceRequestsbyMe: [ServiceRequest!]
     jobs: [JobPosting]
     jobPostingFeed(
       cursor: String
@@ -101,12 +132,14 @@ module.exports = gql`
       category: String!
     ): JobPostingFeed
     jobPosting(id: ID!): JobPosting!
-    viewAllServiceTypes:[Service]
-    getMyBids:[JobBid]
-    getUserbyId(id:ID!):User!
-    getServiceRequestByID(id:ID!):ServiceRequest!
-
-
+    viewAllServiceTypes: [Service]
+    getMyBids: [JobBid]
+    getUserbyId(id: ID!): User!
+    getServiceRequestByID(id: ID!): ServiceRequest!
+    viewAllComplaints: [Complaint!]!
+    viewAllServices: [Service!]!
+    getMyJobPostings(state:String!):[JobPosting]  
+    getMyJobPostingBids(id:ID!):[JobBid]  
   }
 
   type Mutation {
@@ -119,8 +152,11 @@ module.exports = gql`
     adminSignIn(email: String!, password: String!): String!
 
     makeMeServiceProvider(
+      fullname:String!  
       nic: String!
       profession: String!
+      address:String!
+      contactNumber:String!  
       province: String!
       city: String!
       town: String!
@@ -142,6 +178,7 @@ module.exports = gql`
       task: String!
       min_price: String
       max_price: String
+      location:String
       image1: String
       image2: String
       image3: String
@@ -158,6 +195,7 @@ module.exports = gql`
       image2: String
       image3: String
     ): ServiceRequest!
+
     createJobPosting(
       heading: String!
       province: String!
@@ -170,6 +208,7 @@ module.exports = gql`
       upperLimit: Float!
       payMethod: String
     ): JobPosting!
+
     createJobBid(
       proposedAmount: Float!
       proposedDate: String!
@@ -178,39 +217,62 @@ module.exports = gql`
     ): JobBid!
 
     createService(
+      service_name: String
+      description: String
+      user_type: String
+      image: String
+    ): Service!
 
-      service_name:String
-      description:String
-      user_type:String
-      image:String): Service!
+    cancelServiceRequest(id: ID): ServiceRequest!
 
-      cancelServiceRequest(
-        id:ID
-      ):ServiceRequest!
+    rejectServiceRequest(id: ID): ServiceRequest!
 
-      rejectServiceRequest(
-        id:ID
-      ):ServiceRequest!
+    acceptServiceRequest(id: ID, estimate: String): ServiceRequest!
 
-      acceptServiceRequest(
-        id:ID
-        estimate:String
-      ):ServiceRequest!
+    startServiceRequest(id: ID, estimate: String): ServiceRequest!
 
-      rescheduleServiceRequest(
-        id:ID
-        date:String!
-        time:String!
-      ):ServiceRequest!
+    completeServiceRequest(id: ID, finalAmount: Int): ServiceRequest!
 
-      editServiceRequest(
-        id:ID
-        task:String!
-        image1:String
-        image2:String
-        image3:String
-      ):ServiceRequest!
+    rescheduleServiceRequest(
+      id: ID
+      date: String!
+      time: String!
+    ): ServiceRequest!
 
+    editServiceRequest(
+      id: ID
+      task: String!
+      image1: String
+      image2: String
+      image3: String
+    ): ServiceRequest!
 
+    feedbackServiceRequest(
+      id: ID
+      requestRating: Int
+      requestReview: String
+    ): ServiceRequest!
+
+    customerfeedbackServiceRequest(
+      id: ID
+      customerRating: Int
+      customerReview: String
+    ): ServiceRequest!
+
+    makeComplaint(
+      complainer: ID
+      victim: String
+      title:String
+      complaint: String
+    ): Complaint!
+
+    acceptServiceProvider(
+      provider_id:ID
+    ):User!
+
+    suspendServiceProvider(
+      provider_id:ID
+    ):User!
+    acceptJobBid(jobPostingId:ID!,jobBidId:ID!):JobBid!
   }
 `;

@@ -65,6 +65,67 @@ const service_request_mutations = {
       return editedReq;
 
   },
+  feedbackServiceRequest:async(
+    parent,
+    {id,requestRating,requestReview},
+    {models,user}
+)=>{
+  if (!user) {
+      throw new AuthenticationError(
+        'You are not registered to become a service provider'
+      );
+    }
+    console.log(user);
+    const feedbackedReq= await models.ServiceRequests.findOneAndUpdate(
+      {
+        _id: id
+      },
+      {
+        $set: {
+          requestRating,
+          requestReview,
+          state:"Reviewed"
+         
+        }
+      },
+      {
+        new: false
+      }
+    );
+    return feedbackedReq;
+
+},
+
+customerfeedbackServiceRequest:async(
+  parent,
+  {id,customerRating,customerReview},
+  {models,user}
+)=>{
+if (!user) {
+    throw new AuthenticationError(
+      'You are not registered to become a service provider'
+    );
+  }
+  console.log(customerRating,customerReview);
+  const feedbackedReq= await models.ServiceRequests.findOneAndUpdate(
+    {
+      _id: id
+    },
+    {
+      $set: {
+        customerRating,
+        customerReview,
+        
+       
+      }
+    },
+    {
+      new: false
+    }
+  );
+  return feedbackedReq;
+
+},
 
   cancelServiceRequest:async(
       parent,
@@ -118,6 +179,62 @@ const service_request_mutations = {
       }
     );
     return rejectedReq;
+},
+
+startServiceRequest:async(
+  parent,
+  {id},
+  {models,user}
+)=>{
+  if(!user){
+    throw new AuthenticationError(
+        'You are not registered to become a service provider'
+      );
+  }
+
+  const startedReq= await models.ServiceRequests.findOneAndUpdate(
+    {
+      _id: id
+    },
+    {
+      $set: {
+        state:"Started"
+      }
+    },
+    {
+      new: false
+    }
+  );
+  return startedReq;
+},
+
+completeServiceRequest:async(
+  parent,
+  {id,finalAmount},
+  {models,user}
+)=>{
+  if(!user){
+    throw new AuthenticationError(
+        'You are not registered to become a service provider'
+      );
+  }
+
+  const startedReq= await models.ServiceRequests.findOneAndUpdate(
+    {
+      _id: id
+    },
+    {
+      $set: {
+        state:"Completed",
+        finalAmount:finalAmount
+
+      }
+    },
+    {
+      new: false
+    }
+  );
+  return startedReq;
 },
 
 acceptServiceRequest:async(

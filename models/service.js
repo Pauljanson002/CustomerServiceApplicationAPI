@@ -19,6 +19,7 @@ const ServiceSchema = new mongoose.Schema(
         type:String
     }
   }
+
     
 )
 

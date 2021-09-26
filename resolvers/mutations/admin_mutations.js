@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {
@@ -5,7 +6,7 @@ const {
   ForbiddenError
 } = require('apollo-server-express');
 
-const user_mutations = {
+const admin_mutations = {
   adminSignUp: async (parent, { username, email, password }, { models }) => {
     email = email.trim().toLowerCase();
     const hashed = await bcrypt.hash(password, 10);
@@ -35,5 +36,106 @@ const user_mutations = {
       throw new AuthenticationError('Error signing in : Invalid Password');
     }
     return jwt.sign({ id: admin._id }, process.env.JWT_SECRET);
+  },
+  createService: async (parent, args, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
+    try {
+      console.log(args.service_name);
+      const { service_name, description, user_type, image } = args;
+      const service = await models.Service.create({
+        service_name,
+        description,
+        user_type,
+        image
+      });
+      return service;
+    } catch (e) {
+      throw new Error('Error in creating the service.');
+    }
+  },
+  makeComplaint: async (parent, args, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
+    try {
+      console.log(args.complaint);
+      const { complainer, victim, title, complaint } = args;
+      const complain = await models.Complaint.create({
+        complainer,
+        victim,
+        title,
+        complaint
+      });
+      return complain;
+    } catch (e) {
+      throw new Error('Error in creating the complain.');
+    }
+  },
+
+  makeComplaint: async (parent, args, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
+    try {
+      console.log(args.complaint);
+      const { complainer, victim, title, complaint } = args;
+      const complain = await models.Complaint.create({
+        complainer: mongoose.Types.ObjectId(user.id),
+        victim,
+        title,
+        complaint
+      });
+      return complain;
+    } catch (e) {
+      throw new Error('Error in creating the complain.');
+    }
+  },
+
+  acceptServiceProvider: async (parent, { provider_id }, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError(
+        'You are not registered to become a service provider'
+      );
+    }
+    console.log(user);
+    return await models.User.findOneAndUpdate(
+      {
+        _id: provider_id
+      },
+      {
+        $addToSet: {
+          roles: 'service_provider'
+        }
+      },
+      {
+        new: false
+      }
+    );
+  },
+
+  suspendServiceProvider: async (parent, { provider_id }, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError(
+        'You are not registered to become a service provider'
+      );
+    }
+    console.log(user);
+    return await models.User.findOneAndUpdate(
+      {
+        _id: provider_id
+      },
+      {
+        $set: {
+          is_suspended: true
+        }
+      },
+      {
+        new: false
+      }
+    );
   }
 };
+
+module.exports = admin_mutations;

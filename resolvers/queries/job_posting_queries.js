@@ -39,6 +39,27 @@ module.exports = {
     const foundUser = await checkPermission(user,"service_provider")
     const {id}  = args
     return await models.JobPosting.findById(id)
+  },
+  getMyJobPostings:async (parent,args,{models,user})=>{
+    const {state} = args
+    const foundUser = await checkPermission(user,"service_requester")
+    return await models.JobPosting.find({
+      postedBy:foundUser._id,
+      state
+    }).sort({
+      updatedAt:-1
+    })
+  },
+  getMyJobPostingBids:async (parent,args,{models,user})=>{
+    const {id} = args
+    const foundUser = await checkPermission(user,"service_requester")
+    const jobPostingReferred = await models.JobPosting.findById(id)
+    if(!jobPostingReferred.postedBy.equals(foundUser._id)){
+      throw new ForbiddenError("Forbidden to access this data")
+    }
+    return await models.JobBid.find({
+      jobPosting:jobPostingReferred._id
+    })
   }
 
 }

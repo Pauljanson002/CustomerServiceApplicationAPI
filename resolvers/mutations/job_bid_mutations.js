@@ -13,7 +13,32 @@ const job_bid_mutations = {
       jobPosting,
     })
     return jobBid
-    }
+    },
+  acceptJobBid:async (parent,args,{models,user})=>{
+    const {jobPostingId, jobBidId} = args
+    const foundUser = await checkPermission(user,"service_requester")
+
+    //Check whether it belongs to him
+    const jobPosting = await models.JobPosting.findByIdAndUpdate(jobPostingId,{
+      $set:{
+        state:"bid_selected"
+      }
+    })
+    await models.JobBid.updateMany({
+        jobPosting:jobPostingId
+    },{
+      $set:{
+        state:"rejected"
+      }
+    })
+    const selectedJobBid = await models.JobBid.findByIdAndUpdate(jobBidId,{
+      $set:{
+        state:"selected"
+      }
+    })
+    return selectedJobBid
+
+  }
 }
 
 module.exports = job_bid_mutations
