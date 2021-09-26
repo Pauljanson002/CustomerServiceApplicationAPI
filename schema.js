@@ -46,6 +46,8 @@ module.exports = gql`
     postedBy: User!
     description: String
     budgetRange: BudgetRange
+    updatedAt: DateTime
+    state: String
   }
   type JobPostingFeed {
     jobPostings: [JobPosting]!
@@ -53,12 +55,14 @@ module.exports = gql`
     hasNextPage: Boolean!
   }
   type JobBid {
+    id: ID!
     proposedAmount: Float!
     proposedDate: DateTime!
     detailedBreakdown: String
     bidBy: User
     jobPosting: JobPosting
     state: String
+    updatedAt: DateTime
   }
 
   type ServiceRequest {
@@ -138,6 +142,8 @@ module.exports = gql`
     getServiceRequestByID(id: ID!): ServiceRequest!
     viewAllComplaints: [Complaint!]!
     viewAllServices: [Service!]!
+    getMyJobPostings(state: String!): [JobPosting]
+    getMyJobPostingBids(id: ID!): [JobBid]
   }
 
   type Mutation {
@@ -150,8 +156,11 @@ module.exports = gql`
     adminSignIn(email: String!, password: String!): String!
 
     makeMeServiceProvider(
+      fullname: String!
       nic: String!
       profession: String!
+      address: String!
+      contactNumber: String!
       province: String!
       city: String!
       town: String!
@@ -264,5 +273,6 @@ module.exports = gql`
     acceptServiceProvider(provider_id: ID): User!
 
     suspendServiceProvider(provider_id: ID): User!
+    acceptJobBid(jobPostingId: ID!, jobBidId: ID!): JobBid!
   }
 `;

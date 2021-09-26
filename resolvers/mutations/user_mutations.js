@@ -34,7 +34,7 @@ const user_mutations ={
     }
     return jwt.sign({id:user._id},process.env.JWT_SECRET);
   },
-  makeMeServiceProvider:async (parent,{nic,profession,province, city,town,bio},{models,user})=>{
+  makeMeServiceProvider:async (parent,{fullname,nic,profession,address,province, city,town,bio,contactNumber},{models,user})=>{
     if(!user){
       throw new AuthenticationError("You are not registered to become a service provider")
     }
@@ -42,8 +42,9 @@ const user_mutations ={
       _id:user.id
     },{
       $set:{
-        nic,profession,province,city,town,bio,
-        service_providing_status:true
+        fullname,nic,profession,province,city,town,bio,address,
+        service_providing_status:true,
+        contactNum:contactNumber
       },
       $addToSet:{
         roles:"service_provider"
