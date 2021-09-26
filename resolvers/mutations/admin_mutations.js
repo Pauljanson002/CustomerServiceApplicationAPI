@@ -55,24 +55,6 @@ const admin_mutations = {
       throw new Error('Error in creating the service.');
     }
   },
-  makeComplaint: async (parent, args, { models, user }) => {
-    if (!user) {
-      throw new AuthenticationError('You are not registered');
-    }
-    try {
-      console.log(args.complaint);
-      const { complainer, victim, title, complaint } = args;
-      const complain = await models.Complaint.create({
-        complainer,
-        victim,
-        title,
-        complaint
-      });
-      return complain;
-    } catch (e) {
-      throw new Error('Error in creating the complain.');
-    }
-  },
 
   makeComplaint: async (parent, args, { models, user }) => {
     if (!user) {

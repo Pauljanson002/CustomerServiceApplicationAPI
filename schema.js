@@ -8,7 +8,7 @@ module.exports = gql`
     username: String!
     email: String!
     nic: String
-    fullname:String
+    fullname: String
     profession: String
     contactNum: String
     address: String
@@ -19,9 +19,9 @@ module.exports = gql`
     bio: String
     service_providing_status: Boolean
     roles: [String]
-    provider_rating:String
-    provider_review_count:String
-    requester_rating:String
+    provider_rating: String
+    provider_review_count: String
+    requester_rating: String
   }
   type Admin {
     id: ID!
@@ -71,14 +71,14 @@ module.exports = gql`
     task: String!
     min_price: String
     max_price: String
-    location:String
+    location: String
     image1: String
     image2: String
     image3: String
     state: String
     estimate: String
-    requestRating:Int
-    requestReview:String
+    requestRating: Int
+    requestReview: String
   }
 
   type Service {
@@ -93,16 +93,20 @@ module.exports = gql`
     id: ID!
     complainer: ID
     victim: String
-    title:String
+    title: String
     complaint: String!
     createdAt: DateTime!
   }
 
   type Query {
     users: [User!]!
+    takeUsers(accountState: String!): [User!]!
     searchServiceProviderbyName(name: String!): [User!]!
     searchServiceProviderbyProfession(profession: String!): [User!]!
-    searchServiceProviderbyProfessioninProvince(profession: String!, province:String!): [User!]!
+    searchServiceProviderbyProfessioninProvince(
+      profession: String!
+      province: String!
+    ): [User!]!
     viewAllServiceProviders: [User!]!
     me: User!
     pendingServiceRequestsForMe: [ServiceRequest!]
@@ -169,7 +173,7 @@ module.exports = gql`
       task: String!
       min_price: String
       max_price: String
-      location:String
+      location: String
       image1: String
       image2: String
       image3: String
@@ -253,16 +257,12 @@ module.exports = gql`
     makeComplaint(
       complainer: ID
       victim: String
-      title:String
+      title: String
       complaint: String
     ): Complaint!
 
-    acceptServiceProvider(
-      provider_id:ID
-    ):User!
+    acceptServiceProvider(provider_id: ID): User!
 
-    suspendServiceProvider(
-      provider_id:ID
-    ):User!
+    suspendServiceProvider(provider_id: ID): User!
   }
 `;
