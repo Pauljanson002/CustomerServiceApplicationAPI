@@ -208,6 +208,35 @@ startServiceRequest:async(
   return startedReq;
 },
 
+completeServiceRequest:async(
+  parent,
+  {id,finalAmount},
+  {models,user}
+)=>{
+  if(!user){
+    throw new AuthenticationError(
+        'You are not registered to become a service provider'
+      );
+  }
+
+  const startedReq= await models.ServiceRequests.findOneAndUpdate(
+    {
+      _id: id
+    },
+    {
+      $set: {
+        state:"Completed",
+        finalAmount:finalAmount
+
+      }
+    },
+    {
+      new: false
+    }
+  );
+  return startedReq;
+},
+
 acceptServiceRequest:async(
     parent,
     {id,estimate},

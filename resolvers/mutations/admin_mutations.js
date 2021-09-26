@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {
@@ -60,16 +61,80 @@ const admin_mutations = {
     }
     try {
       console.log(args.complaint);
-      const { complainer, victim, complaint } = args;
+      const { complainer, victim, title, complaint } = args;
       const complain = await models.Complaint.create({
         complainer,
         victim,
+        title,
         complaint
       });
       return complain;
     } catch (e) {
       throw new Error('Error in creating the complain.');
     }
+  },
+
+  makeComplaint: async (parent, args, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
+    try {
+      console.log(args.complaint);
+      const { complainer, victim, title, complaint } = args;
+      const complain = await models.Complaint.create({
+        complainer: mongoose.Types.ObjectId(user.id),
+        victim,
+        title,
+        complaint
+      });
+      return complain;
+    } catch (e) {
+      throw new Error('Error in creating the complain.');
+    }
+  },
+
+  acceptServiceProvider: async (parent, { provider_id }, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError(
+        'You are not registered to become a service provider'
+      );
+    }
+    console.log(user);
+    return await models.User.findOneAndUpdate(
+      {
+        _id: provider_id
+      },
+      {
+        $addToSet: {
+          roles: 'service_provider'
+        }
+      },
+      {
+        new: false
+      }
+    );
+  },
+
+  suspendServiceProvider: async (parent, { provider_id }, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError(
+        'You are not registered to become a service provider'
+      );
+    }
+    console.log(user);
+    return await models.User.findOneAndUpdate(
+      {
+        _id: provider_id
+      },
+      {
+        $set: {
+          is_suspended: true
+        }
+      },
+      {
+        new: false
+      }
+    );
   }
 };
 

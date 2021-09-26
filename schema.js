@@ -95,8 +95,9 @@ module.exports = gql`
 
   type Complaint {
     id: ID!
-    complainer: String!
-    victim: String!
+    complainer: ID
+    victim: String
+    title:String
     complaint: String!
     createdAt: DateTime!
   }
@@ -136,6 +137,7 @@ module.exports = gql`
     getUserbyId(id: ID!): User!
     getServiceRequestByID(id: ID!): ServiceRequest!
     viewAllComplaints: [Complaint!]!
+    viewAllServices: [Service!]!
     getMyJobPostings(state:String!):[JobPosting]  
     getMyJobPostingBids(id:ID!):[JobBid]  
   }
@@ -229,6 +231,8 @@ module.exports = gql`
 
     startServiceRequest(id: ID, estimate: String): ServiceRequest!
 
+    completeServiceRequest(id: ID, finalAmount: Int): ServiceRequest!
+
     rescheduleServiceRequest(
       id: ID
       date: String!
@@ -256,11 +260,19 @@ module.exports = gql`
     ): ServiceRequest!
 
     makeComplaint(
-      complainer: String
+      complainer: ID
       victim: String
+      title:String
       complaint: String
     ): Complaint!
+
+    acceptServiceProvider(
+      provider_id:ID
+    ):User!
+
+    suspendServiceProvider(
+      provider_id:ID
+    ):User!
     acceptJobBid(jobPostingId:ID!,jobBidId:ID!):JobBid!
   }
-
 `;
