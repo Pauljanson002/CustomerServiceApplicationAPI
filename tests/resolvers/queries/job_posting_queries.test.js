@@ -1,4 +1,5 @@
 const job_posting_queries = require('../../../resolvers/queries/job_posting_queries')
+const {AuthenticationError,ForbiddenError} = require('apollo-server-express')
 describe("Job posting queries",()=>{
   describe("when called jobs function",()=>{
     it("should call the find function of job postings", function() {
@@ -12,5 +13,11 @@ describe("Job posting queries",()=>{
         expect(mock).toHaveBeenCalled();
       })
     });
+  })
+  describe("when called job posting feed function",()=>{
+    it("should throw authentication error if no user given",async ()=>{
+      const models = {}
+      await expect(job_posting_queries.jobPostingFeed({},{},{})).rejects.toThrow("Please login to continue")
+    })
   })
 })
