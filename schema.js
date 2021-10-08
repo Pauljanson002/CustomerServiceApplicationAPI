@@ -83,6 +83,7 @@ module.exports = gql`
     estimate: String
     requestRating: Int
     requestReview: String
+    toDatePayment:String
   }
 
   type Service {

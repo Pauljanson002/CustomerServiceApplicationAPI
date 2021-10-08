@@ -52,6 +52,7 @@ const ServiceRequestSchema = new mongoose.Schema(
       type:Boolean,
       default:false
     },
+    toDatePayment:String,
     
     state: {
         type:String,
