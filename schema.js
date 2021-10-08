@@ -22,6 +22,7 @@ module.exports = gql`
     provider_rating: String
     provider_review_count: String
     requester_rating: String
+    
   }
   type Admin {
     id: ID!
@@ -83,6 +84,8 @@ module.exports = gql`
     estimate: String
     requestRating: Int
     requestReview: String
+    customerReview:String
+    customerRating:Int
     toDatePayment:String
   }
 
