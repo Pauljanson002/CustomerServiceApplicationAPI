@@ -113,7 +113,10 @@ module.exports = gql`
     searchServiceProviderbyProfession(profession: String!): [User!]!
     searchServiceProviderbyProfessioninProvince(
       profession: String!
-      province: String!
+      province: String
+      city: String
+      rating:String
+
     ): [User!]!
     viewAllServiceProviders: [User!]!
     me: User!
