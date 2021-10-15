@@ -13,7 +13,7 @@ const service_provider_queries = {
     }
     const foundUser = await models.User.findById(user.id)
     if(!foundUser.roles.includes("service_provider")){
-      throw new ForbiddenError("You don't have enough permission to do this")
+      throw new ForbiddenError("You are not a Service Provider. No Permission")
     }
     
     const pendingRequests=await ServiceRequests.find({ state: 'Pending', provider_id: user.id }).limit(
@@ -29,7 +29,7 @@ const service_provider_queries = {
     }
     const foundUser = await models.User.findById(user.id)
     if(!foundUser.roles.includes("service_provider")){
-      throw new ForbiddenError("You don't have enough permission to do this")
+      throw new ForbiddenError("You are not a Service Provider. No Permission")
     }
     
     const acceptedRequests= await ServiceRequests.find({
@@ -45,7 +45,7 @@ const service_provider_queries = {
     }
     const foundUser = await models.User.findById(user.id)
     if(!foundUser.roles.includes("service_provider")){
-      throw new ForbiddenError("You don't have enough permission to do this")
+      throw new ForbiddenError("You are not a Service Provider. No Permission")
     }
     
     const acceptedRequests= await ServiceRequests.find({
@@ -61,7 +61,7 @@ const service_provider_queries = {
     }
     const foundUser = await models.User.findById(user.id)
     if(!foundUser.roles.includes("service_provider")){
-      throw new ForbiddenError("You don't have enough permission to do this")
+      throw new ForbiddenError("You are not a Service Provider. No Permission")
     }
     
     const acceptedRequests= await ServiceRequests.find({
@@ -77,7 +77,7 @@ const service_provider_queries = {
     }
     const foundUser = await models.User.findById(user.id)
     if(!foundUser.roles.includes("service_provider")){
-      throw new ForbiddenError("You don't have enough permission to do this")
+      throw new ForbiddenError("You are not a Service Provider. No Permission")
     }
     
     const acceptedRequests= await ServiceRequests.find({
@@ -93,7 +93,7 @@ const service_provider_queries = {
     }
     const foundUser = await models.User.findById(user.id)
     if(!foundUser.roles.includes("service_provider")){
-      throw new ForbiddenError("You don't have enough permission to do this")
+      throw new ForbiddenError("You are not a Service Provider. No Permission")
     }
     
     const acceptedRequests= await ServiceRequests.find({
@@ -109,7 +109,7 @@ const service_provider_queries = {
     }
     const foundUser = await models.User.findById(user.id)
     if(!foundUser.roles.includes("service_provider")){
-      throw new ForbiddenError("You don't have enough permission to do this")
+      throw new ForbiddenError("You are not a Service Provider. No Permission")
     }
     
     const reviewedRequests= await ServiceRequests.find({

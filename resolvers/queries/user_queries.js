@@ -32,16 +32,69 @@ module.exports ={
   },
   searchServiceProviderbyProfessioninProvince: async (
     parent,
-    { profession,province },
+    { profession,province,city,rating },
     { models, user }
   ) => {
+    console.log(profession,province==='',city===null,rating);
     if (!user) {
       throw new AuthenticationError('You are not registered');
     }
+    if(province!=='' && city!==''){
+      if(rating==='0'){
+        const users= await models.User.find({ profession: profession ,province:province, city:city }).sort({provider_rating:-1});
+        return users;
 
-    const users= await models.User.find({ profession: profession ,province:province });
+      }else if (rating==='1'){
+        const users= await models.User.find({ profession: profession ,province:province, city:city }).sort({provider_rating:1});
+        return users;
+      }else{
+        const users= await models.User.find({ profession: profession ,province:province, city:city });
+        return users;
+      }
+      
+    }
+    if(province!=='' && city===''){
+      if(rating==='0'){
+        const users= await models.User.find({ profession: profession ,province:province}).sort({provider_rating:-1});
+        return users;
+
+      }else if (rating==='1'){
+        const users= await models.User.find({ profession: profession ,province:province }).sort({provider_rating:1});
+        return users;
+      }else{
+        const users= await models.User.find({ profession: profession ,province:province});
+        return users;
+      }
+    }
+    if(province==='' && city !==''){
+      if(rating==='0'){
+        const users= await models.User.find({ profession: profession ,city:city }).sort({provider_rating:-1});
+        return users;
+
+      }else if (rating==='1'){
+        const users= await models.User.find({ profession: profession ,city:city }).sort({provider_rating:1});
+        return users;
+      }else{
+        const users= await models.User.find({ profession: profession , city:city });
+        return users;
+      }
+    }
+    if(province==='' && city ===''){
+      if(rating==='0'){
+        const users= await models.User.find({ profession: profession  }).sort({provider_rating:-1});
+        return users;
+
+      }else if (rating==='1'){
+        const users= await models.User.find({ profession: profession  }).sort({provider_rating:1});
+        return users;
+      }else{
+        const users= await models.User.find({ profession: profession  });
+        return users;
+      }
+    }
+   
     //console.log(users);
-    return users;
+    
   },
 
   viewAllServiceProviders: async (

@@ -22,6 +22,7 @@ module.exports = gql`
     provider_rating: String
     provider_review_count: String
     requester_rating: String
+    
   }
   type Admin {
     id: ID!
@@ -83,6 +84,9 @@ module.exports = gql`
     estimate: String
     requestRating: Int
     requestReview: String
+    customerReview:String
+    customerRating:Int
+    toDatePayment:String
   }
 
   type Service {
@@ -109,7 +113,10 @@ module.exports = gql`
     searchServiceProviderbyProfession(profession: String!): [User!]!
     searchServiceProviderbyProfessioninProvince(
       profession: String!
-      province: String!
+      province: String
+      city: String
+      rating:String
+
     ): [User!]!
     viewAllServiceProviders: [User!]!
     me: User!
