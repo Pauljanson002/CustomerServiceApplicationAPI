@@ -14,6 +14,7 @@ const admin_queries = {
     const complaints = await models.Complaint.find({});
     return complaints;
   },
+
   viewAllServices: async (parent, args, { models, user }) => {
     if (!user) {
       throw new AuthenticationError('You are not registered');
@@ -21,6 +22,14 @@ const admin_queries = {
 
     const services = await models.Service.find({});
     return services;
+  },
+
+  takeUsers: async (parent, args, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
+    const users = await models.User.find({});
+    return users;
   }
 };
 

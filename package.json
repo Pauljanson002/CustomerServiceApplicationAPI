@@ -36,6 +36,7 @@
     "graphql-validation-complexity": "0.2.4",
     "helmet": "3.21.2",
     "i18next": "^20.6.1",
+    "jest-html-reporter": "^3.4.1",
     "jsonwebtoken": "8.5.1",
     "marked": "0.7.0",
     "md5": "2.2.1",
