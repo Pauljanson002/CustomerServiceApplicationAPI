@@ -166,7 +166,7 @@ module.exports = gql`
       town: String!
       bio: String
     ): User!
-
+     updateMe(fullname:String,contactNum:String,address:String,profession:String,province:String,city:String,town:String,postalCode:String):User 
     registerServiceRequester(
       contactNum: String!
       address: String!

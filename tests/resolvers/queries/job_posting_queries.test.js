@@ -1,6 +1,6 @@
 const job_posting_queries = require('../../../resolvers/queries/job_posting_queries')
-const {AuthenticationError,ForbiddenError} = require('apollo-server-express')
-describe("Job posting queries",()=>{
+const models = require("../../../models")
+describe("Given Job posting queries",()=>{
   describe("when called jobs function",()=>{
     it("should call the find function of job postings", function() {
       const mock = jest.fn()

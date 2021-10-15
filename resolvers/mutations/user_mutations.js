@@ -79,6 +79,21 @@ const user_mutations ={
       new:false
     });
 
+  },
+  updateMe:async (parent,args,{models,user})=>{
+    if(!user){
+      throw  new AuthenticationError("You are not signed in")
+    }
+    const {fullname,contactNum,address,profession,province,city,town,postalCode} = args
+    return await models.User.findOneAndUpdate({
+      _id:user.id
+    },{
+      $set:{
+        fullname,contactNum,address,profession,province,city,town,postalCode
+      }
+    },{
+      new:false
+    })
   }
 }
 
