@@ -28,7 +28,16 @@ const admin_queries = {
     if (!user) {
       throw new AuthenticationError('You are not registered');
     }
-    const users = await models.User.find({});
+    const users = await models.User.find(
+      { profile_state: args.accountState },
+      function(err, docs) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('takeUsers call : ', docs);
+        }
+      }
+    );
     return users;
   }
 };

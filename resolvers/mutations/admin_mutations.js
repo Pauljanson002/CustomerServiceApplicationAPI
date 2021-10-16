@@ -75,13 +75,25 @@ const admin_mutations = {
     }
   },
 
-  acceptServiceProvider: async (parent, { provider_id }, { models, user }) => {
+  // setProfileState(providerID:ID state:String): User!
+
+  setProfileState: async (parent, { providerID, state }, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
+    return await models.User.findOneAndUpdate(
+      { _id: providerID },
+      { $set: { profile_state: state } },
+      { new: true }
+    );
+  },
+
+  approveServiceProvider: async (parent, { provider_id }, { models, user }) => {
     if (!user) {
       throw new AuthenticationError(
         'You are not registered to become a service provider'
       );
     }
-    console.log(user);
     return await models.User.findOneAndUpdate(
       {
         _id: provider_id
@@ -92,7 +104,7 @@ const admin_mutations = {
         }
       },
       {
-        new: false
+        new: true
       }
     );
   },
@@ -103,18 +115,15 @@ const admin_mutations = {
         'You are not registered to become a service provider'
       );
     }
-    console.log(user);
     return await models.User.findOneAndUpdate(
       {
         _id: provider_id
       },
       {
-        $set: {
-          is_suspended: true
-        }
+        $pull: { roles: 'service_provider' }
       },
       {
-        new: false
+        new: true
       }
     );
   }
