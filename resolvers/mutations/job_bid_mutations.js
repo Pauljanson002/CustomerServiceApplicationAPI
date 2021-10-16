@@ -38,7 +38,8 @@ const job_bid_mutations = {
     })
     return selectedJobBid
 
-  }
+  },
+
 }
 
 module.exports = job_bid_mutations
