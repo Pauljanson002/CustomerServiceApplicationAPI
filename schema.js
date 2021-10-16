@@ -144,7 +144,7 @@ module.exports = gql`
     ): JobPostingFeed
     jobPosting(id: ID!): JobPosting!
     viewAllServiceTypes: [Service]
-    getMyBids: [JobBid]
+    getMyBids(state:String): [JobBid]
     getUserbyId(id: ID!): User!
     getServiceRequestByID(id: ID!): ServiceRequest!
     viewAllComplaints: [Complaint!]!
