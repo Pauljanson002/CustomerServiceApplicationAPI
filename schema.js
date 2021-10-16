@@ -22,7 +22,7 @@ module.exports = gql`
     provider_rating: String
     provider_review_count: String
     requester_rating: String
-    
+    profile_state: String
   }
   type Admin {
     id: ID!
@@ -84,9 +84,9 @@ module.exports = gql`
     estimate: String
     requestRating: Int
     requestReview: String
-    customerReview:String
-    customerRating:Int
-    toDatePayment:String
+    customerReview: String
+    customerRating: Int
+    toDatePayment: String
   }
 
   type Service {
@@ -274,9 +274,11 @@ module.exports = gql`
       complaint: String
     ): Complaint!
 
-    acceptServiceProvider(provider_id: ID): User!
+    approveServiceProvider(provider_id: ID): User!
 
     suspendServiceProvider(provider_id: ID): User!
     acceptJobBid(jobPostingId: ID!, jobBidId: ID!): JobBid!
+
+    setProfileState(providerID: ID, state: String): User!
   }
 `;
