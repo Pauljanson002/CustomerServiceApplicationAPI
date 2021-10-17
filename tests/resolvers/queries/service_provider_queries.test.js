@@ -18,7 +18,7 @@ describe("Service Provider queries",()=>{
     describe("when called pendingServiceRequestsForMe function",()=>{
       it("should throw authentication error if no user given",async ()=>{
         const models = {}
-        await expect(service_provider_queries.pendingServiceRequestsForMe({},{},{})).rejects.toThrow("Please login to continue")
+        await expect(service_provider_queries.pendingServiceRequestsForMe({},{},{})).rejects.toThrow("Please login to continue").catch(e=>console.log(e))
       });
     })
 
