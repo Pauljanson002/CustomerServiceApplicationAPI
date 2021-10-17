@@ -226,6 +226,9 @@ module.exports = gql`
       detailedBreakdown: String
       jobPosting: ID!
     ): JobBid!
+      
+     changeStateJobBid(jobBidId:ID!,jobBidState:String!):JobBid! 
+     rejectJobBid(jobBidId:ID!):JobBid 
 
     createService(
       service_name: String
