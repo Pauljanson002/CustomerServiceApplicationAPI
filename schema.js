@@ -115,8 +115,7 @@ module.exports = gql`
       profession: String!
       province: String
       city: String
-      rating:String
-
+      rating: String
     ): [User!]!
     viewAllServiceProviders: [User!]!
     me: User!
@@ -173,7 +172,16 @@ module.exports = gql`
       town: String!
       bio: String
     ): User!
-     updateMe(fullname:String,contactNum:String,address:String,profession:String,province:String,city:String,town:String,postalCode:String):User 
+    updateMe(
+      fullname: String
+      contactNum: String
+      address: String
+      profession: String
+      province: String
+      city: String
+      town: String
+      postalCode: String
+    ): User
     registerServiceRequester(
       contactNum: String!
       address: String!
@@ -283,5 +291,6 @@ module.exports = gql`
     acceptJobBid(jobPostingId: ID!, jobBidId: ID!): JobBid!
 
     setProfileState(providerID: ID, state: String): User!
+    removeServiceProvider(id: ID): Boolean!
   }
 `;
