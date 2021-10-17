@@ -23,7 +23,7 @@ const JobBidSchema = new mongoose.Schema({
   },
   state:{
     type:String,
-    enum:["selected","rejected","started","requested"],
+    enum:["selected","rejected","completed","requested","paid","canceled"],
     default:"requested"
   }
 },
