@@ -37,9 +37,35 @@ const job_bid_mutations = {
       }
     })
     return selectedJobBid
+  },
+  changeStateJobBid:async (parent,args,{models,user})=>{
+    const foundUser = await checkPermission(user,"service_provider")
+    const {jobBidId,jobBidState} = args
+    const selectedJobBid = await models.JobBid.findByIdAndUpdate(jobBidId,{
+      $set:{
+        state:jobBidState
+      }
+    })
+    return selectedJobBid
+  },
+  rejectJobBid:async (parent,args,{models,user})=>{
+    const {jobBidId} = args
+    const foundUser = await checkPermission(user,"service_requester")
+    const foundJobBid = await models.JobBid.findById(jobBidId).populate("jobPosting")
+    if(!foundJobBid.jobPosting.postedBy.equals(foundUser._id)){
+      throw new ForbiddenError("This is not your job posting to reject")
+    }
+    foundJobBid.state = "rejected"
+    if (foundJobBid.jobPosting.state === "bid_selected"){
+      const jobPosting = await models.JobPosting.findByIdAndUpdate(foundJobBid.jobPosting._id,{
+        $set:{
+          state:"closed"
+        }
+      })
+    }
+    return await foundJobBid.save()
 
   },
-
 }
 
 module.exports = job_bid_mutations

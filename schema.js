@@ -143,7 +143,7 @@ module.exports = gql`
     ): JobPostingFeed
     jobPosting(id: ID!): JobPosting!
     viewAllServiceTypes: [Service]
-    getMyBids: [JobBid]
+    getMyBids(state:String): [JobBid]
     getUserbyId(id: ID!): User!
     getServiceRequestByID(id: ID!): ServiceRequest!
     viewAllComplaints: [Complaint!]!
@@ -234,6 +234,9 @@ module.exports = gql`
       detailedBreakdown: String
       jobPosting: ID!
     ): JobBid!
+      
+     changeStateJobBid(jobBidId:ID!,jobBidState:String!):JobBid! 
+     rejectJobBid(jobBidId:ID!):JobBid 
 
     createService(
       service_name: String

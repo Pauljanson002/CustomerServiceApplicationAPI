@@ -25,7 +25,7 @@ const JobPostingSchema = new mongoose.Schema({
   state:{
      type:String,
     default:"open",
-    enum:["open","closed","bid_selected"]
+    enum:["open","closed","bid_selected","completed"]
   }
 },{
   timestamps:true
