@@ -4,17 +4,14 @@ const Schema = require('mongoose').Schema;
 const ComplaintSchema = new mongoose.Schema(
   {
     complainer: {
-      type: Schema.Types.ObjectId,
-      required: true,
+      type: Schema.ObjectId,
       ref: 'User'
     },
     victim: {
-      type: String,
-      
+      type: String
     },
-    title:{
-      type:String,
-      
+    title: {
+      type: String
     },
     complaint: {
       type: String,

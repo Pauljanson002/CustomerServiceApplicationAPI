@@ -99,7 +99,7 @@ module.exports = gql`
 
   type Complaint {
     id: ID!
-    complainer: ID
+    complainer: User
     victim: String
     title: String
     complaint: String!
@@ -150,7 +150,7 @@ module.exports = gql`
     ): JobPostingFeed
     jobPosting(id: ID!): JobPosting!
     viewAllServiceTypes: [Service]
-    getMyBids(state:String): [JobBid]
+    getMyBids(state: String): [JobBid]
     getUserbyId(id: ID!): User!
     getServiceRequestByID(id: ID!): ServiceRequest!
     viewAllComplaints: [Complaint!]!
@@ -241,9 +241,9 @@ module.exports = gql`
       detailedBreakdown: String
       jobPosting: ID!
     ): JobBid!
-      
-     changeStateJobBid(jobBidId:ID!,jobBidState:String!):JobBid! 
-     rejectJobBid(jobBidId:ID!):JobBid 
+
+    changeStateJobBid(jobBidId: ID!, jobBidState: String!): JobBid!
+    rejectJobBid(jobBidId: ID!): JobBid
 
     createService(
       service_name: String
