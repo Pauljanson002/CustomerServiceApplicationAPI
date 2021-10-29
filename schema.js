@@ -106,6 +106,13 @@ module.exports = gql`
     createdAt: DateTime!
   }
 
+  type Message {
+    from: String
+    body: String
+    to: String!
+   
+  }
+
   type Query {
     users: [User!]!
     takeUsers(accountState: String!): [User!]!
@@ -287,6 +294,13 @@ module.exports = gql`
       title: String
       complaint: String
     ): Complaint!
+
+    sendMessage(
+      from: String
+      body: String
+      to: String
+    
+    ): Message
 
     approveServiceProvider(provider_id: ID): User!
 
