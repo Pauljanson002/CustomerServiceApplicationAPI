@@ -113,6 +113,21 @@ module.exports = gql`
    
   }
 
+  type Conversation {
+    id:ID
+    members: [ID]
+    createdAt:DateTime
+   
+  }
+
+  type NewMessage{
+    id:ID
+    conversationID:ID
+    sender:ID
+    text:String
+    createdAt:DateTime
+  }
+
   type Query {
     users: [User!]!
     takeUsers(accountState: String!): [User!]!
@@ -157,6 +172,8 @@ module.exports = gql`
     viewAllServices: [Service!]!
     getMyJobPostings(state: String!): [JobPosting]
     getMyJobPostingBids(id: ID!): [JobBid]
+    conversationsOfUser:[Conversation]
+    getNewMessages(conversationID:ID):[NewMessage]
   }
 
   type Mutation {
@@ -301,6 +318,18 @@ module.exports = gql`
       to: String
     
     ): Message
+
+    newConverstion(
+      senderID:ID
+      recieverID:ID
+    ):Conversation
+
+    addMessage(
+      conversationID:ID
+      sender:ID
+      text:String
+
+    ):NewMessage
 
     approveServiceProvider(provider_id: ID): User!
 

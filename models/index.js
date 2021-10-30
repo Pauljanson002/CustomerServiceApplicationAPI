@@ -5,6 +5,8 @@ const JobBid = require('./JobBid');
 const ServiceRequests = require('./serviceRequests');
 const Service = require('./service');
 const Complaint = require('./complaint');
+const Conversation =require('./Conversation');
+const Message=require('./Message');
 const models = {
   User,
   JobPosting,
@@ -12,7 +14,9 @@ const models = {
   ServiceRequests,
   Service,
   Admin,
-  Complaint
+  Complaint,
+  Conversation,
+  Message,
 };
 
 module.exports = models;
