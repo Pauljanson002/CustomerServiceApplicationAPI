@@ -83,6 +83,23 @@ app.post("/payment/notify",async(req,res)=>{
   })
 
 })
+app.post("/payment/notify_sr",async (req,res)=>{
+  if(req.body.status_code === '2'){
+    const id = req.body.order_id.substr(1)
+    const sr = await models.ServiceRequests.findByIdAndUpdate(id,{
+      $set:{
+        state:"Paid"
+      }
+    })
+    return res.status(200).json({
+      "message":"done",
+      "service_request_id":req.body.order_id.substr(1)
+    })
+  }
+  else res.status(400).json({
+    "message":"Failed"
+  })
+})
 
 startServer(app).then(()=>{
   app.listen({port},()=>{

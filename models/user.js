@@ -43,7 +43,7 @@ const UserSchema = new mongoose.Schema(
     },
     profile_state: {
       type: String,
-      required: false
+      required:false
     }
   },
   {
