@@ -99,11 +99,33 @@ module.exports = gql`
 
   type Complaint {
     id: ID!
-    complainer: ID
+    complainer: User
     victim: String
     title: String
     complaint: String!
     createdAt: DateTime!
+  }
+
+  type Message {
+    from: String
+    body: String
+    to: String!
+   
+  }
+
+  type Conversation {
+    id:ID
+    members: [ID]
+    createdAt:DateTime
+   
+  }
+
+  type NewMessage{
+    id:ID
+    conversationID:ID
+    sender:ID
+    text:String
+    createdAt:DateTime
   }
 
   type Query {
@@ -115,8 +137,7 @@ module.exports = gql`
       profession: String!
       province: String
       city: String
-      rating:String
-
+      rating: String
     ): [User!]!
     viewAllServiceProviders: [User!]!
     me: User!
@@ -144,13 +165,15 @@ module.exports = gql`
     ): JobPostingFeed
     jobPosting(id: ID!): JobPosting!
     viewAllServiceTypes: [Service]
-    getMyBids(state:String): [JobBid]
+    getMyBids(state: String): [JobBid]
     getUserbyId(id: ID!): User!
     getServiceRequestByID(id: ID!): ServiceRequest!
     viewAllComplaints: [Complaint!]!
     viewAllServices: [Service!]!
     getMyJobPostings(state: String!): [JobPosting]
     getMyJobPostingBids(id: ID!): [JobBid]
+    conversationsOfUser:[Conversation]
+    getNewMessages(conversationID:ID):[NewMessage]
   }
 
   type Mutation {
@@ -173,7 +196,16 @@ module.exports = gql`
       town: String!
       bio: String
     ): User!
-     updateMe(fullname:String,contactNum:String,address:String,profession:String,province:String,city:String,town:String,postalCode:String):User 
+    updateMe(
+      fullname: String
+      contactNum: String
+      address: String
+      profession: String
+      province: String
+      city: String
+      town: String
+      postalCode: String
+    ): User
     registerServiceRequester(
       contactNum: String!
       address: String!
@@ -226,9 +258,9 @@ module.exports = gql`
       detailedBreakdown: String
       jobPosting: ID!
     ): JobBid!
-      
-     changeStateJobBid(jobBidId:ID!,jobBidState:String!):JobBid! 
-     rejectJobBid(jobBidId:ID!):JobBid 
+
+    changeStateJobBid(jobBidId: ID!, jobBidState: String!): JobBid!
+    rejectJobBid(jobBidId: ID!): JobBid
 
     createService(
       service_name: String
@@ -280,11 +312,31 @@ module.exports = gql`
       complaint: String
     ): Complaint!
 
+    sendMessage(
+      from: String
+      body: String
+      to: String
+    
+    ): Message
+
+    newConverstion(
+      senderID:ID
+      recieverID:ID
+    ):Conversation
+
+    addMessage(
+      conversationID:ID
+      sender:ID
+      text:String
+
+    ):NewMessage
+
     approveServiceProvider(provider_id: ID): User!
 
     suspendServiceProvider(provider_id: ID): User!
     acceptJobBid(jobPostingId: ID!, jobBidId: ID!): JobBid!
 
     setProfileState(providerID: ID, state: String): User!
+    removeServiceProvider(id: ID): Boolean!
   }
 `;

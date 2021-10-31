@@ -21,20 +21,18 @@ const ServiceRequestSchema = new mongoose.Schema(
     },
     image1: 
       {
-        data: Buffer,
-        contentType: String
+        type: String,
+        
       }
     ,
     image2: 
     {
-      data: Buffer,
-      contentType: String
+      type: String,
     }
   ,
   image3: 
   {
-    data: Buffer,
-    contentType: String
+    type: String,
   }
 ,
     min_price: String,

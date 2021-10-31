@@ -126,6 +126,17 @@ const admin_mutations = {
         new: true
       }
     );
+  },
+  removeServiceProvider: async (parent, { id }, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered.');
+    }
+    try {
+      await models.User.findOneAndRemove({ _id: id });
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 };
 
