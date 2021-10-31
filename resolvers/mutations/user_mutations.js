@@ -10,7 +10,7 @@ const user_mutations ={
       const user = await models.User.create({
         username,
         email,
-        password: hashed
+        password: hashed,
       });
       return jwt.sign({ id: user._id}, process.env.JWT_SECRET);
 
@@ -43,12 +43,9 @@ const user_mutations ={
     },{
       $set:{
         fullname,nic,profession,province,city,town,bio,address,
-        service_providing_status:true,
-        contactNum:contactNumber
+        contactNum:contactNumber,
+        profile_state:"created"
       },
-      $addToSet:{
-        roles:"service_provider"
-      }
     },{
       new:false
     });

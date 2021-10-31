@@ -83,7 +83,11 @@ const admin_mutations = {
     }
     return await models.User.findOneAndUpdate(
       { _id: providerID },
-      { $set: { profile_state: state } },
+      { $set: { profile_state: state ,
+        service_providing_status:true},
+      $addToSet:{
+        roles:"service_provider"
+      }},
       { new: true }
     );
   },
