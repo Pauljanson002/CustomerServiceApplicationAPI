@@ -25,7 +25,15 @@ const JobBidSchema = new mongoose.Schema({
     type:String,
     enum:["selected","rejected","completed","requested","paid","canceled"],
     default:"requested"
-  }
+  },
+  providerReview:{
+    type:String,
+  },
+  requesterReview:{
+    type:String
+  },
+  providerRating:Number,
+  requesterRating:Number
 },
   {
     timestamps:true,

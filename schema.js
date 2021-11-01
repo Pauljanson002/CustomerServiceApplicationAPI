@@ -2,7 +2,10 @@ const { gql } = require('apollo-server-express');
 
 module.exports = gql`
   scalar DateTime
-
+  type Rating{
+      providerRating:Float
+      requesterRating:Float
+  }  
   type User {
     id: ID!
     username: String!
@@ -23,6 +26,7 @@ module.exports = gql`
     provider_review_count: String
     requester_rating: String
     profile_state: String
+    rating:Rating  
   }
   type Admin {
     id: ID!
@@ -63,6 +67,10 @@ module.exports = gql`
     bidBy: User
     jobPosting: JobPosting
     state: String
+    providerReview:String,
+    providerRating:Float,
+    requesterReview:String,
+    requesterRating:Float,  
     updatedAt: DateTime
   }
 
@@ -166,6 +174,7 @@ module.exports = gql`
     jobPosting(id: ID!): JobPosting!
     viewAllServiceTypes: [Service]
     getMyBids(state: String): [JobBid]
+    getJobBidById(id:ID!):JobBid!  
     getUserbyId(id: ID!): User!
     getServiceRequestByID(id: ID!): ServiceRequest!
     viewAllComplaints: [Complaint!]!
@@ -174,6 +183,7 @@ module.exports = gql`
     getMyJobPostingBids(id: ID!): [JobBid]
     conversationsOfUser:[Conversation]
     getNewMessages(conversationID:ID):[NewMessage]
+      
   }
 
   type Mutation {
@@ -338,5 +348,6 @@ module.exports = gql`
 
     setProfileState(providerID: ID, state: String): User!
     removeServiceProvider(id: ID): Boolean!
+    addReviewToBid(type:String,id:ID,rating:Float,review:String):JobBid
   }
 `;
