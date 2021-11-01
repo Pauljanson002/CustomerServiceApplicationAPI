@@ -39,6 +39,20 @@ const admin_queries = {
       }
     );
     return users;
+  },
+
+  takeServiceProviders: async (parent, args, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError('You are not registered');
+    }
+    const users = await models.User.find({}, function(err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('takeSPs call : ', docs);
+      }
+    });
+    return users;
   }
 };
 

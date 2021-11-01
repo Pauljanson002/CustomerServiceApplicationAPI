@@ -118,7 +118,6 @@ module.exports = gql`
     from: String
     body: String
     to: String!
-   
   }
 
   type Conversation {
@@ -139,6 +138,7 @@ module.exports = gql`
   type Query {
     users: [User!]!
     takeUsers(accountState: String!): [User!]!
+    takeServiceProviders: [User!]!
     searchServiceProviderbyName(name: String!): [User!]!
     searchServiceProviderbyProfession(profession: String!): [User!]!
     searchServiceProviderbyProfessioninProvince(
@@ -322,12 +322,7 @@ module.exports = gql`
       complaint: String
     ): Complaint!
 
-    sendMessage(
-      from: String
-      body: String
-      to: String
-    
-    ): Message
+    sendMessage(from: String, body: String, to: String): Message
 
     newConverstion(
       senderID:ID
