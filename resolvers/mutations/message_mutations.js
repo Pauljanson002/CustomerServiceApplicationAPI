@@ -40,6 +40,48 @@ const message_mutations = {
     } catch (e) {
       throw new Error('Error in sending message.');
     }
-  }
+  },
+
+  newConverstion: async (parent, args, { models, user }) => {
+    
+    try {
+      console.log(args,user);
+      const { senderID, recieverID } = args;
+      members=[senderID, recieverID];
+      const savedConversation = await models.Conversation.create({
+        members
+      });
+
+      return savedConversation;
+
+
+
+    }catch(e){
+      console.log(e);
+    }
+  },
+
+  addMessage: async (parent, {conversationID,sender,text}, { models, user }) => {
+    
+    try {
+      
+
+      const newMessage = await models.Message.create({
+        conversationID:conversationID,
+        sender,
+        text
+      });
+
+      return newMessage;
+
+
+
+    }catch(e){
+      console.log(e);
+    }
+  },
+
+
+
 };
 module.exports = message_mutations;

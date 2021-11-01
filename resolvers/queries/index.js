@@ -10,6 +10,7 @@ const service_request_queries = require('./service_request_queries');
 const service_types_queries = require('./service_types_queries');
 const admin_queries = require('./admin_queries');
 const job_bid_queries = require('./job_bid_queries');
+const message_queries = require('./message_queries');
 
 module.exports = {
   ...user_queries,
@@ -20,6 +21,7 @@ module.exports = {
   ...service_types_queries,
   ...job_bid_queries,
   ...admin_queries,
+  ...message_queries,
 
   me: async (parent, args, { models, user }) => {
     if (user) {
