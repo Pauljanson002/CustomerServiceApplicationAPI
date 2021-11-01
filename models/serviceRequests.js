@@ -46,11 +46,11 @@ const ServiceRequestSchema = new mongoose.Schema(
     customerReview:String,
     customerRating:Number,
     estimate:String,
-    hasAdvancedPaid:{
+    hasPaid:{
       type:Boolean,
       default:false
     },
-    toDatePayment:String,
+    finalAmount:String,
     
     state: {
         type:String,

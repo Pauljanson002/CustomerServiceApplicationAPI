@@ -94,7 +94,8 @@ module.exports = gql`
     requestReview: String
     customerReview: String
     customerRating: Int
-    toDatePayment: String
+    finalAmount: String
+    hasPaid:Boolean
   }
 
   type Service {
@@ -217,6 +218,7 @@ module.exports = gql`
       postalCode: String
     ): User
     registerServiceRequester(
+      fullname: String!
       contactNum: String!
       address: String!
       city: String!
@@ -287,7 +289,7 @@ module.exports = gql`
 
     startServiceRequest(id: ID, estimate: String): ServiceRequest!
 
-    completeServiceRequest(id: ID, finalAmount: Int): ServiceRequest!
+    completeServiceRequest(id: ID, finalAmount: String): ServiceRequest!
 
     rescheduleServiceRequest(
       id: ID
@@ -298,9 +300,6 @@ module.exports = gql`
     editServiceRequest(
       id: ID
       task: String!
-      image1: String
-      image2: String
-      image3: String
     ): ServiceRequest!
 
     feedbackServiceRequest(

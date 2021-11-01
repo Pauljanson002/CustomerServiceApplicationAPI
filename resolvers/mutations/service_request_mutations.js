@@ -37,7 +37,7 @@ const service_request_mutations = {
 
   editServiceRequest:async(
       parent,
-      {id,task,image1,image2,image3},
+      {id,task},
       {models,user}
   )=>{
     if (!user) {
@@ -53,9 +53,6 @@ const service_request_mutations = {
         {
           $set: {
             task,
-            image1,
-            image2,
-            image3
           }
         },
         {
