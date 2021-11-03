@@ -26,7 +26,8 @@ module.exports = gql`
     provider_review_count: String
     requester_rating: String
     profile_state: String
-    rating:Rating  
+    rating:Rating
+    profile_url:String  
   }
   type Admin {
     id: ID!
