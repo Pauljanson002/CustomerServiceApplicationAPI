@@ -291,6 +291,8 @@ module.exports = gql`
 
     completeServiceRequest(id: ID, finalAmount: String): ServiceRequest!
 
+    confirmCashPayment(id: ID): ServiceRequest!
+
     rescheduleServiceRequest(
       id: ID
       date: String!

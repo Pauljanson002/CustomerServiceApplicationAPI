@@ -234,6 +234,33 @@ completeServiceRequest:async(
   return startedReq;
 },
 
+confirmCashPayment:async(
+  parent,
+  {id},
+  {models,user}
+)=>{
+  if(!user){
+    throw new AuthenticationError(
+        'You are not registered to become a service provider'
+      );
+  }
+
+  const paidReq= await models.ServiceRequests.findOneAndUpdate(
+    {
+      _id: id
+    },
+    {
+      $set: {
+        hasPaid:true
+      }
+    },
+    {
+      new: false
+    }
+  );
+  return paidReq;
+},
+
 acceptServiceRequest:async(
     parent,
     {id,estimate},
