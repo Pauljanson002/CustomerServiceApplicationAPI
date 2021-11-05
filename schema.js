@@ -26,6 +26,7 @@ module.exports = gql`
     provider_review_count: String
     requester_rating: String
     profile_state: String
+    profile_url:String  
     rating:Rating  
   }
   type Admin {
@@ -215,6 +216,7 @@ module.exports = gql`
       city: String
       town: String
       postalCode: String
+      profile_url:String
     ): User
     registerServiceRequester(
       contactNum: String!
