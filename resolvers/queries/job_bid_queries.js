@@ -10,5 +10,9 @@ module.exports = {
       state
     })
     return foundBids
+  },
+  getJobBidById:async (parent,args,{models,user})=>{
+    const {id} = args
+    return models.JobBid.findById(id);
   }
 }

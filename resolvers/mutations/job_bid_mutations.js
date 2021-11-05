@@ -66,6 +66,30 @@ const job_bid_mutations = {
     return await foundJobBid.save()
 
   },
+  addReviewToBid:async (parent,args,{models,user})=>{
+    const {type,id,rating,review} = args
+    const bid = await models.JobBid.findById(id)
+    if(type === "provider"){
+      const foundUser = await checkPermission(user,"service_requester")
+      const jobPosting = await models.JobPosting.findById(bid.jobPosting)
+      if(!foundUser._id.equals(jobPosting.postedBy)){
+        throw new ForbiddenError("You can't access")
+      }
+      bid.providerReview = review
+      bid.providerRating = rating
+      return await bid.save()
+    }else if(type === "requester"){
+      const foundUser = await checkPermission(user,"service_provider")
+      if(!foundUser._id.equals(bid.bidBy)){
+        throw new ForbiddenError("You can't access")
+      }
+      bid.requesterReview = review
+      bid.requesterRating = rating
+      return await bid.save()
+    }else{
+      throw new Error("Error")
+    }
+  }
 }
 
 module.exports = job_bid_mutations

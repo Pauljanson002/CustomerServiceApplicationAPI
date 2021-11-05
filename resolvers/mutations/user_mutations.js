@@ -53,6 +53,7 @@ const user_mutations ={
   },
 
   registerServiceRequester:async (parent,{
+      fullname,
       contactNum,
       address,
       city,
@@ -66,7 +67,7 @@ const user_mutations ={
       _id:user.id
     },{
       $set:{
-        contactNum,address,city,postalCode,
+        fullname,contactNum,address,city,postalCode,
         
       },
       $addToSet:{
@@ -81,12 +82,12 @@ const user_mutations ={
     if(!user){
       throw  new AuthenticationError("You are not signed in")
     }
-    const {fullname,contactNum,address,profession,province,city,town,postalCode} = args
+    const {fullname,contactNum,address,profession,province,city,town,postalCode,profile_url} = args
     return await models.User.findOneAndUpdate({
       _id:user.id
     },{
       $set:{
-        fullname,contactNum,address,profession,province,city,town,postalCode
+        fullname,contactNum,address,profession,province,city,town,postalCode,profile_url
       }
     },{
       new:false

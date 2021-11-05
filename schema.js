@@ -2,7 +2,10 @@ const { gql } = require('apollo-server-express');
 
 module.exports = gql`
   scalar DateTime
-
+  type Rating{
+      providerRating:Float
+      requesterRating:Float
+  }  
   type User {
     id: ID!
     username: String!
@@ -23,6 +26,8 @@ module.exports = gql`
     provider_review_count: String
     requester_rating: String
     profile_state: String
+    profile_url:String  
+    rating:Rating  
   }
   type Admin {
     id: ID!
@@ -63,6 +68,10 @@ module.exports = gql`
     bidBy: User
     jobPosting: JobPosting
     state: String
+    providerReview:String,
+    providerRating:Float,
+    requesterReview:String,
+    requesterRating:Float,  
     updatedAt: DateTime
   }
 
@@ -86,7 +95,8 @@ module.exports = gql`
     requestReview: String
     customerReview: String
     customerRating: Int
-    toDatePayment: String
+    finalAmount: String
+    hasPaid:Boolean
   }
 
   type Service {
@@ -110,7 +120,6 @@ module.exports = gql`
     from: String
     body: String
     to: String!
-   
   }
 
   type Conversation {
@@ -131,6 +140,7 @@ module.exports = gql`
   type Query {
     users: [User!]!
     takeUsers(accountState: String!): [User!]!
+    takeServiceProviders: [User!]!
     searchServiceProviderbyName(name: String!): [User!]!
     searchServiceProviderbyProfession(profession: String!): [User!]!
     searchServiceProviderbyProfessioninProvince(
@@ -166,6 +176,7 @@ module.exports = gql`
     jobPosting(id: ID!): JobPosting!
     viewAllServiceTypes: [Service]
     getMyBids(state: String): [JobBid]
+    getJobBidById(id:ID!):JobBid!  
     getUserbyId(id: ID!): User!
     getServiceRequestByID(id: ID!): ServiceRequest!
     viewAllComplaints: [Complaint!]!
@@ -174,6 +185,7 @@ module.exports = gql`
     getMyJobPostingBids(id: ID!): [JobBid]
     conversationsOfUser:[Conversation]
     getNewMessages(conversationID:ID):[NewMessage]
+      
   }
 
   type Mutation {
@@ -205,8 +217,10 @@ module.exports = gql`
       city: String
       town: String
       postalCode: String
+      profile_url:String
     ): User
     registerServiceRequester(
+      fullname: String!
       contactNum: String!
       address: String!
       city: String!
@@ -277,7 +291,9 @@ module.exports = gql`
 
     startServiceRequest(id: ID, estimate: String): ServiceRequest!
 
-    completeServiceRequest(id: ID, finalAmount: Int): ServiceRequest!
+    completeServiceRequest(id: ID, finalAmount: String): ServiceRequest!
+
+    confirmCashPayment(id: ID): ServiceRequest!
 
     rescheduleServiceRequest(
       id: ID
@@ -288,9 +304,6 @@ module.exports = gql`
     editServiceRequest(
       id: ID
       task: String!
-      image1: String
-      image2: String
-      image3: String
     ): ServiceRequest!
 
     feedbackServiceRequest(
@@ -312,12 +325,7 @@ module.exports = gql`
       complaint: String
     ): Complaint!
 
-    sendMessage(
-      from: String
-      body: String
-      to: String
-    
-    ): Message
+    sendMessage(from: String, body: String, to: String): Message
 
     newConverstion(
       senderID:ID
@@ -338,5 +346,6 @@ module.exports = gql`
 
     setProfileState(providerID: ID, state: String): User!
     removeServiceProvider(id: ID): Boolean!
+    addReviewToBid(type:String,id:ID,rating:Float,review:String):JobBid
   }
 `;
