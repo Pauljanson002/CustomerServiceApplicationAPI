@@ -53,6 +53,7 @@ const user_mutations ={
   },
 
   registerServiceRequester:async (parent,{
+      fullname,
       contactNum,
       address,
       city,
@@ -66,7 +67,7 @@ const user_mutations ={
       _id:user.id
     },{
       $set:{
-        contactNum,address,city,postalCode,
+        fullname,contactNum,address,city,postalCode,
         
       },
       $addToSet:{

@@ -37,7 +37,7 @@ const service_request_mutations = {
 
   editServiceRequest:async(
       parent,
-      {id,task,image1,image2,image3},
+      {id,task},
       {models,user}
   )=>{
     if (!user) {
@@ -53,9 +53,6 @@ const service_request_mutations = {
         {
           $set: {
             task,
-            image1,
-            image2,
-            image3
           }
         },
         {
@@ -235,6 +232,33 @@ completeServiceRequest:async(
     }
   );
   return startedReq;
+},
+
+confirmCashPayment:async(
+  parent,
+  {id},
+  {models,user}
+)=>{
+  if(!user){
+    throw new AuthenticationError(
+        'You are not registered to become a service provider'
+      );
+  }
+
+  const paidReq= await models.ServiceRequests.findOneAndUpdate(
+    {
+      _id: id
+    },
+    {
+      $set: {
+        hasPaid:true
+      }
+    },
+    {
+      new: false
+    }
+  );
+  return paidReq;
 },
 
 acceptServiceRequest:async(
