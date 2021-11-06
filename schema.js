@@ -185,6 +185,7 @@ module.exports = gql`
     getMyJobPostingBids(id: ID!): [JobBid]
     conversationsOfUser:[Conversation]
     getNewMessages(conversationID:ID):[NewMessage]
+    getReviewedRequestsofUser(id:ID):[ServiceRequest]
       
   }
 
