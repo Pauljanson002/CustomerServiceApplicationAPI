@@ -1,4 +1,4 @@
-const service_provider_queries = require('../../../resolvers/queries/service_provider_queries');
+const service_provider_queries = require('../../../../resolvers/queries/service_provider_queries');
 
 describe("Service Provider queries",()=>{
     describe("when called pendingServiceRequestsForMe function",()=>{
