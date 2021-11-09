@@ -36,7 +36,6 @@ module.exports = {
     }
   },
   jobPosting:async (parent,args,{models,user})=>{
-    const foundUser = await checkPermission(user,"service_provider")
     const {id}  = args
     return await models.JobPosting.findById(id)
   },

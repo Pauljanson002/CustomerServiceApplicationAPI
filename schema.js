@@ -26,8 +26,13 @@ module.exports = gql`
     provider_review_count: String
     requester_rating: String
     profile_state: String
+<<<<<<< HEAD
     rating: Rating
     profile_url: String
+=======
+    profile_url:String  
+    rating:Rating  
+>>>>>>> d6d7b71186f505296c77d7deea423610387d0e7e
   }
   type Admin {
     id: ID!
@@ -182,8 +187,10 @@ module.exports = gql`
     viewAllServices: [Service!]!
     getMyJobPostings(state: String!): [JobPosting]
     getMyJobPostingBids(id: ID!): [JobBid]
-    conversationsOfUser: [Conversation]
-    getNewMessages(conversationID: ID): [NewMessage]
+    conversationsOfUser:[Conversation]
+    getNewMessages(conversationID:ID):[NewMessage]
+    getReviewedRequestsofUser(id:ID):[ServiceRequest]
+      
   }
 
   type Mutation {
@@ -220,6 +227,7 @@ module.exports = gql`
       city: String
       town: String
       postalCode: String
+      profile_url:String
     ): User
     registerServiceRequester(
       fullname: String!

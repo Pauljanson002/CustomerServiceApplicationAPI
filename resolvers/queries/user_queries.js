@@ -116,12 +116,26 @@ module.exports ={
     { id },
     { models, user }
   ) => {
-    if (!user) {
-      throw new AuthenticationError('You are not registered');
-    }
+    //if (!user) {
+      //throw new AuthenticationError('You are not registered');
+    //}
 
     const user_result= await models.User.findById(id);
     //console.log(users);
     return user_result;
   },
+
+  getReviewedRequestsofUser:async( parent,{id}, {models,user})=>{
+    //if (!user) {
+      //throw new AuthenticationError('You are not registered');
+    ////}
+    const requests= await models.ServiceRequests.find({
+      state: 'Reviewed',
+      provider_id: id
+    }).limit(100);
+    console.log(requests, "REQUESTS",id);
+    return requests;
+
+
+  }
 }
