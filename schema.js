@@ -117,7 +117,7 @@ module.exports = gql`
   }
 
   type Message {
-    from: String
+
     body: String
     to: String!
   }
@@ -326,7 +326,7 @@ module.exports = gql`
       complaint: String
     ): Complaint!
 
-    sendMessage(from: String, body: String, to: String): Message
+    sendMessage( body: String, to: String): Message
 
     newConverstion(
       senderID:ID
