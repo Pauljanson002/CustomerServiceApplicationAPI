@@ -1,7 +1,6 @@
 const job_posting_queries = require('../../../resolvers/queries/user_queries')
 const models = require("../../../models");
-import mockAxios from "axios";
-const searchServiceProviderbyProfessioninProvince= require('../../../resolvers/queries/user_queries');
+
 describe("Given user queries",()=>{
     describe("when called searchServiceProviderbyProfessioninProvince function",  ()=>{
         it("should find all service providers of a profession if city and province is not given", async ()=> {
@@ -19,7 +18,7 @@ describe("Given user queries",()=>{
 
   
     describe("when called getUserbyId function",  ()=>{
-        it("should find the user with id", async ()=> {
+        it("should find the user with id",  ()=> {
             
         });
 

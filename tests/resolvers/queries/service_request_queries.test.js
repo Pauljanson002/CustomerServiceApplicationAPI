@@ -4,7 +4,7 @@ const models = require("../../../models");
 
 describe("Given service requester queries",()=>{
     describe("when called getServiceRequestByID function",  ()=>{
-        it("should find the service request of the id", async ()=> {
+        it("should find the service request of the id",  ()=> {
             
         });
 
