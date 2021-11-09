@@ -2,10 +2,10 @@ const { gql } = require('apollo-server-express');
 
 module.exports = gql`
   scalar DateTime
-  type Rating{
-      providerRating:Float
-      requesterRating:Float
-  }  
+  type Rating {
+    providerRating: Float
+    requesterRating: Float
+  }
   type User {
     id: ID!
     username: String!
@@ -26,8 +26,8 @@ module.exports = gql`
     provider_review_count: String
     requester_rating: String
     profile_state: String
-    profile_url:String  
-    rating:Rating  
+    profile_url: String
+    rating: Rating
   }
   type Admin {
     id: ID!
@@ -68,10 +68,10 @@ module.exports = gql`
     bidBy: User
     jobPosting: JobPosting
     state: String
-    providerReview:String,
-    providerRating:Float,
-    requesterReview:String,
-    requesterRating:Float,  
+    providerReview: String
+    providerRating: Float
+    requesterReview: String
+    requesterRating: Float
     updatedAt: DateTime
   }
 
@@ -96,7 +96,7 @@ module.exports = gql`
     customerReview: String
     customerRating: Int
     finalAmount: String
-    hasPaid:Boolean
+    hasPaid: Boolean
   }
 
   type Service {
@@ -117,24 +117,23 @@ module.exports = gql`
   }
 
   type Message {
-    from: String
+
     body: String
     to: String!
   }
 
   type Conversation {
-    id:ID
+    id: ID
     members: [ID]
-    createdAt:DateTime
-   
+    createdAt: DateTime
   }
 
-  type NewMessage{
-    id:ID
-    conversationID:ID
-    sender:ID
-    text:String
-    createdAt:DateTime
+  type NewMessage {
+    id: ID
+    conversationID: ID
+    sender: ID
+    text: String
+    createdAt: DateTime
   }
 
   type Query {
@@ -176,17 +175,16 @@ module.exports = gql`
     jobPosting(id: ID!): JobPosting!
     viewAllServiceTypes: [Service]
     getMyBids(state: String): [JobBid]
-    getJobBidById(id:ID!):JobBid!  
+    getJobBidById(id: ID!): JobBid!
     getUserbyId(id: ID!): User!
     getServiceRequestByID(id: ID!): ServiceRequest!
     viewAllComplaints: [Complaint!]!
     viewAllServices: [Service!]!
     getMyJobPostings(state: String!): [JobPosting]
     getMyJobPostingBids(id: ID!): [JobBid]
-    conversationsOfUser:[Conversation]
-    getNewMessages(conversationID:ID):[NewMessage]
-    getReviewedRequestsofUser(id:ID):[ServiceRequest]
-      
+    conversationsOfUser: [Conversation]
+    getNewMessages(conversationID: ID): [NewMessage]
+    getReviewedRequestsofUser(id: ID): [ServiceRequest]
   }
 
   type Mutation {
@@ -194,7 +192,12 @@ module.exports = gql`
 
     signIn(email: String!, password: String!): String!
 
-    adminSignUp(username: String!, email: String!, password: String!): String!
+    adminSignUp(
+      username: String!
+      email: String!
+      password: String!
+      securityKey: String!
+    ): String!
 
     adminSignIn(email: String!, password: String!): String!
 
@@ -218,7 +221,7 @@ module.exports = gql`
       city: String
       town: String
       postalCode: String
-      profile_url:String
+      profile_url: String
     ): User
     registerServiceRequester(
       fullname: String!
@@ -302,10 +305,7 @@ module.exports = gql`
       time: String!
     ): ServiceRequest!
 
-    editServiceRequest(
-      id: ID
-      task: String!
-    ): ServiceRequest!
+    editServiceRequest(id: ID, task: String!): ServiceRequest!
 
     feedbackServiceRequest(
       id: ID
@@ -326,19 +326,11 @@ module.exports = gql`
       complaint: String
     ): Complaint!
 
-    sendMessage(from: String, body: String, to: String): Message
+    sendMessage( body: String, to: String): Message
 
-    newConverstion(
-      senderID:ID
-      recieverID:ID
-    ):Conversation
+    newConverstion(senderID: ID, recieverID: ID): Conversation
 
-    addMessage(
-      conversationID:ID
-      sender:ID
-      text:String
-
-    ):NewMessage
+    addMessage(conversationID: ID, sender: ID, text: String): NewMessage
 
     approveServiceProvider(provider_id: ID): User!
 
@@ -346,7 +338,8 @@ module.exports = gql`
     acceptJobBid(jobPostingId: ID!, jobBidId: ID!): JobBid!
 
     setProfileState(providerID: ID, state: String): User!
-    removeServiceProvider(id: ID): Boolean!
-    addReviewToBid(type:String,id:ID,rating:Float,review:String):JobBid
+    removeServiceProvider(id: ID): User!
+    removeComplaint(id: ID): Boolean!
+    addReviewToBid(type: String, id: ID, rating: Float, review: String): JobBid
   }
 `;
