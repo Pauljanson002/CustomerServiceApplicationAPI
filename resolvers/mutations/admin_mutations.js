@@ -7,9 +7,17 @@ const {
 } = require('apollo-server-express');
 
 const admin_mutations = {
-  adminSignUp: async (parent, { username, email, password }, { models }) => {
+  adminSignUp: async (
+    parent,
+    { username, email, password, securityKey },
+    { models }
+  ) => {
     email = email.trim().toLowerCase();
     const hashed = await bcrypt.hash(password, 10);
+
+    if (securityKey !== '12345678') {
+      throw new AuthenticationError('Error signing up : Invalid Security Key');
+    }
     try {
       const admin = await models.Admin.create({
         username,
@@ -42,7 +50,7 @@ const admin_mutations = {
       throw new AuthenticationError('You are not registered');
     }
     try {
-      console.log(args.service_name);
+      console.log(args);
       const { service_name, description, user_type, image } = args;
       const service = await models.Service.create({
         service_name,
@@ -83,11 +91,12 @@ const admin_mutations = {
     }
     return await models.User.findOneAndUpdate(
       { _id: providerID },
-      { $set: { profile_state: state ,
-        service_providing_status:true},
-      $addToSet:{
-        roles:"service_provider"
-      }},
+      {
+        $set: { profile_state: state, service_providing_status: true },
+        $addToSet: {
+          roles: 'service_provider'
+        }
+      },
       { new: true }
     );
   },
@@ -136,10 +145,29 @@ const admin_mutations = {
       throw new AuthenticationError('You are not registered.');
     }
     try {
-      await models.User.findOneAndRemove({ _id: id });
+      return await models.User.findByIdAndUpdate(id, {
+        $set: {
+          username: 'RemovedUser' + id,
+          email: 'RemovedUserMail',
+          nic: 'removedNIC',
+          fullname: 'removedName',
+          province: 'removedProvince',
+          city: 'removedCity',
+          town: 'removedTown',
+          service_providing_status: false,
+          profile_state: 'deleted'
+        }
+      });
+    } catch (e) {
+      throw new Error('Error in Removing Service Provider.');
+    }
+  },
+  removeComplaint: async (parent, { id }, { models, complaint }) => {
+    try {
+      await models.Complaint.findOneAndRemove({ _id: id });
       return true;
-    } catch (err) {
-      return false;
+    } catch (e) {
+      throw new Error('Error in Removing Complaint.');
     }
   }
 };
