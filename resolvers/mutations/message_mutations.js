@@ -5,7 +5,7 @@ const {
   AuthenticationError,
   ForbiddenError
 } = require('apollo-server-express');
-
+require('dotenv').config();
 
 const message_mutations = {
   sendMessage: async (parent, args, { models, user }) => {
@@ -14,7 +14,7 @@ const message_mutations = {
       const {  to, body } = args;
 
       const accountSid = "AC5876bfa1ce1d4481da77ea09aa7d3dff";
-      const authToken = "4a7c97913b5900c044745373bcd75bbd";
+      const authToken = process.env.TWILIO_AUTH_TOKEN;
       const client = require('twilio')(accountSid, authToken);
       console.log("send msg");
       toNumber=to;
@@ -33,7 +33,7 @@ const message_mutations = {
  
 
     } catch (e) {
-      throw new Error('Error in sending message.');
+      console.log('Error in sending message.');
     }
   },
 
