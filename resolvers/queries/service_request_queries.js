@@ -1,7 +1,7 @@
 module.exports = {
   getServiceRequestByID: async (parent, { id }, { models, user }) => {
     if (!user) {
-      throw new AuthenticationError('You are not registered');
+      throw new AuthenticationError('You are not a registered user');
     }
    
     const sr_result = await models.ServiceRequests.findById(id);
