@@ -13,8 +13,12 @@ const service_request_mutations = {
   ) => {
     if (!user) {
       throw new AuthenticationError(
-        'You are not registered to become a service provider'
+        'You are not registered to become a service requester'
       );
+    }
+    const foundUser = await models.User.findById(user.id);
+    if (!foundUser.roles.includes('service_requester')) {
+      throw new ForbiddenError('You are not a Service Requester. No Permission');
     }
     console.log("rescheduling");
     const rescheduledReq= await models.ServiceRequests.findOneAndUpdate(
@@ -42,9 +46,13 @@ const service_request_mutations = {
   )=>{
     if (!user) {
         throw new AuthenticationError(
-          'You are not registered to become a service provider'
+          'You are not registered to become a service requester'
         );
       }
+      const foundUser = await models.User.findById(user.id);
+    if (!foundUser.roles.includes('service_requester')) {
+      throw new ForbiddenError('You are not a Service Requester. No Permission');
+    }
       console.log(user);
       const editedReq= await models.ServiceRequests.findOneAndUpdate(
         {
@@ -69,8 +77,12 @@ const service_request_mutations = {
 )=>{
   if (!user) {
       throw new AuthenticationError(
-        'You are not registered to become a service provider'
+        'You are not registered to become a service requester'
       );
+    }
+    const foundUser = await models.User.findById(user.id);
+    if (!foundUser.roles.includes('service_requester')) {
+      throw new ForbiddenError('You are not a Service Requester. No Permission');
     }
     console.log(user);
     const feedbackedReq= await models.ServiceRequests.findOneAndUpdate(
@@ -103,6 +115,10 @@ if (!user) {
       'You are not registered to become a service provider'
     );
   }
+  const foundUser = await models.User.findById(user.id);
+    if (!foundUser.roles.includes('service_provider')) {
+      throw new ForbiddenError('You are not a Service Provider. No Permission');
+    }
   console.log(customerRating,customerReview);
   const feedbackedReq= await models.ServiceRequests.findOneAndUpdate(
     {
@@ -131,9 +147,13 @@ if (!user) {
   )=>{
       if(!user){
         throw new AuthenticationError(
-            'You are not registered to become a service provider'
+            'You are not registered to become a service requester'
           );
       }
+      const foundUser = await models.User.findById(user.id);
+    if (!foundUser.roles.includes('service_requester')) {
+      throw new ForbiddenError('You are not a Service Requester. No Permission');
+    }
 
       const canceledReq= await models.ServiceRequests.findOneAndUpdate(
         {
@@ -160,6 +180,10 @@ if (!user) {
       throw new AuthenticationError(
           'You are not registered to become a service provider'
         );
+    }
+    const foundUser = await models.User.findById(user.id);
+    if (!foundUser.roles.includes('service_provider')) {
+      throw new ForbiddenError('You are not a Service Provider. No Permission');
     }
 
     const rejectedReq= await models.ServiceRequests.findOneAndUpdate(
@@ -188,6 +212,10 @@ startServiceRequest:async(
         'You are not registered to become a service provider'
       );
   }
+  const foundUser = await models.User.findById(user.id);
+    if (!foundUser.roles.includes('service_provider')) {
+      throw new ForbiddenError('You are not a Service Provider. No Permission');
+    }
 
   const startedReq= await models.ServiceRequests.findOneAndUpdate(
     {
@@ -215,6 +243,10 @@ completeServiceRequest:async(
         'You are not registered to become a service provider'
       );
   }
+  const foundUser = await models.User.findById(user.id);
+    if (!foundUser.roles.includes('service_provider')) {
+      throw new ForbiddenError('You are not a Service Provider. No Permission');
+    }
 
   const startedReq= await models.ServiceRequests.findOneAndUpdate(
     {
@@ -244,6 +276,10 @@ confirmCashPayment:async(
         'You are not registered to become a service provider'
       );
   }
+  const foundUser = await models.User.findById(user.id);
+    if (!foundUser.roles.includes('service_provider')) {
+      throw new ForbiddenError('You are not a Service Provider. No Permission');
+    }
 
   const paidReq= await models.ServiceRequests.findOneAndUpdate(
     {
@@ -270,6 +306,10 @@ acceptServiceRequest:async(
       throw new AuthenticationError(
           'You are not registered to become a service provider'
         );
+    }
+    const foundUser = await models.User.findById(user.id);
+    if (!foundUser.roles.includes('service_provider')) {
+      throw new ForbiddenError('You are not a Service Provider. No Permission');
     }
 
     const acceptedReq= await models.ServiceRequests.findOneAndUpdate(
