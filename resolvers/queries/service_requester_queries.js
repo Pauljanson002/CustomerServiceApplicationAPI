@@ -10,10 +10,10 @@ const service_requester_queries = {
     pendingServiceRequestsbyMe: async (parent, args, { models, user }) => {
       if (!user) {
         throw new AuthenticationError(
-          'You are not registered user'
+          'You are not a registered user'
         );
       }
-      const requests=  await ServiceRequests.find({ state: 'Pending', requester_id: user.id }).limit(
+      const requests=  await models.ServiceRequests.find({ state: 'Pending', requester_id: user.id }).limit(
         100
       );
       return requests;

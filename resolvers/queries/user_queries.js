@@ -138,7 +138,7 @@ module.exports = {
         }
       }
     } catch (e) {
-      console.log(error);
+      console.log(e);
     }
 
     //console.log(users);
