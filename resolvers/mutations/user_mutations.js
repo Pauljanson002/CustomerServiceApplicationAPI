@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const {AuthenticationError,ForbiddenError} = require('apollo-server-express')
-
+const {checkPermission} = require("../util")
 const user_mutations ={
   signUp: async (parent, { username, email, password }, { models }) => {
     email = email.trim().toLowerCase();
@@ -15,6 +15,9 @@ const user_mutations ={
       return jwt.sign({ id: user._id}, process.env.JWT_SECRET);
 
     } catch (e) {
+      if(e.code === 11000){
+        throw new Error("Username or email already exists")
+      }
       throw new Error('Error creating account');
     }
   },
@@ -34,7 +37,7 @@ const user_mutations ={
     }
     return jwt.sign({id:user._id},process.env.JWT_SECRET);
   },
-  makeMeServiceProvider:async (parent,{fullname,nic,profession,address,province, city,town,bio,contactNumber},{models,user})=>{
+  makeMeServiceProvider:async (parent,{fullname,nic,profession,address,province, city,town,bio,contactNumber,postalCode,profile_url},{models,user})=>{
     if(!user){
       throw new AuthenticationError("You are not registered to become a service provider")
     }
@@ -42,7 +45,7 @@ const user_mutations ={
       _id:user.id
     },{
       $set:{
-        fullname,nic,profession,province,city,town,bio,address,
+        fullname,nic,profession,province,city,town,bio,address,postalCode,profile_url,
         contactNum:contactNumber,
         profile_state:"created"
       },
@@ -92,6 +95,15 @@ const user_mutations ={
     },{
       new:false
     })
+  },
+  changeServiceProvidingStatus:async (parent,args,{models,user})=>{
+    const foundUser =await checkPermission(user,"service_provider")
+    if(foundUser.profile_state && foundUser.profile_state === "paused"){
+      foundUser.profile_state = "approved"
+    }else{
+      foundUser.profile_state = "paused"
+    }
+    return await foundUser.save()
   }
 }
 
