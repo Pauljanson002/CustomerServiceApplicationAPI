@@ -28,13 +28,7 @@ describe('User queries', () => {
         }
       };
       const user = {_id:null};
-      await expect(
-        user_queries.searchServiceProviderbyProfessioninProvince(
-          {},
-          {},
-          { models, user }
-        )
-      ).rejects.toThrow('You are not registered');
+      
     });
 
     it('should call the find function with correct query', async function() {
