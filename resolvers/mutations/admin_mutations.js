@@ -15,7 +15,7 @@ const admin_mutations = {
     email = email.trim().toLowerCase();
     const hashed = await bcrypt.hash(password, 10);
 
-    if (securityKey !== '12345678') {
+    if (securityKey !== process.env.JWT_SECRET) {
       throw new AuthenticationError('Error signing up : Invalid Security Key');
     }
     try {

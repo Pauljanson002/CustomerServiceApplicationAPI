@@ -16,7 +16,7 @@ module.exports = {
     const {cursor,province,city,town,category} =  args
     const limit = 10
     let hasNextPage = false
-    let cursorQuery = {location:{province,city,town},category}
+    let cursorQuery = {location:{province,city,town},category,state:"open"}
     if(cursor){
       cursorQuery = {...cursorQuery, _id :{$lt:cursor}}
     }
@@ -59,6 +59,6 @@ module.exports = {
     return await models.JobBid.find({
       jobPosting:jobPostingReferred._id
     })
-  }
+  },
 
 }

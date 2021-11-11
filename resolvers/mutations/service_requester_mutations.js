@@ -52,6 +52,7 @@ const service_requester_mutations = {
         image2,
         image3
       );
+
       const serviceRequest = await models.ServiceRequests.create({
         requester_id: user.id,
         provider_id,
