@@ -211,6 +211,8 @@ module.exports = gql`
       city: String!
       town: String!
       bio: String
+      postalCode:String
+      profile_url:String  
     ): User!
     updateMe(
       fullname: String
@@ -341,5 +343,6 @@ module.exports = gql`
     removeServiceProvider(id: ID): User!
     removeComplaint(id: ID): Boolean!
     addReviewToBid(type: String, id: ID, rating: Float, review: String): JobBid
+    changeServiceProvidingStatus:User  
   }
 `;
