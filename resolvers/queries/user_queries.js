@@ -9,7 +9,8 @@ module.exports = {
     //console.log(name);
     var nameRegex = new RegExp(name.toUpperCase());
     const users = await models.User.find({
-      username: { $regex: nameRegex, $options: 'i' }
+      username: { $regex: nameRegex, $options: 'i' },
+      profile_state:"approved"
     });
     console.log(users);
     return users;
@@ -23,7 +24,7 @@ module.exports = {
       throw new AuthenticationError('You are not registered');
     }
 
-    const users = await models.User.find({ profession: profession });
+    const users = await models.User.find({ profession: profession,profile_state:"approved" });
     //console.log(users);
     return users;
   },

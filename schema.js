@@ -185,6 +185,7 @@ module.exports = gql`
     conversationsOfUser: [Conversation]
     getNewMessages(conversationID: ID): [NewMessage]
     getReviewedRequestsofUser(id: ID): [ServiceRequest]
+    getMyBidsForJobPosting(postingId:ID):JobBid
   }
 
   type Mutation {
