@@ -16,7 +16,7 @@ module.exports = {
     const {cursor,province,city,town,category} =  args
     const limit = 10
     let hasNextPage = false
-    let cursorQuery = {location:{province,city,town},category,state:"open"}
+    let cursorQuery = {location:{province,city,town},category,state:"open",postedBy:{$ne:foundUser._id}}
     if(cursor){
       cursorQuery = {...cursorQuery, _id :{$lt:cursor}}
     }
