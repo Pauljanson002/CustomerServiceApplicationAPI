@@ -68,7 +68,9 @@ describe("Given jobposting feed function",()=>{
       await job_posting_queries.jobPostingFeed({},args,{models,user}).then((data)=>{
         console.log(data)
       })
-      expect(mock).toBeCalledWith({"category": "Category", "location": {"city": "City", "province": "Province", "town": "Town"},"state":"open"})
+      expect(mock).toBeCalledWith({"category": "Category", "location": {"city": "City", "province": "Province", "town": "Town"},"state":"open", "postedBy":  {
+       "$ne": 1,
+        }})
 
     });
   })
